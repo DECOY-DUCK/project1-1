@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.happyhouse.model.mapper.NoticeMapper">
+	<resultMap type="Notice" id="noticeList">
+		<result column="no" property="no"/>
+		<association property="image" column="no" javaType="NoticeFile" select="selectFile"/>
+	</resultMap>
+	
+	<select id="selectAllNotices" parameterType="int" resultMap="noticeList">
+		select n.*, date_format(n.createdAt, '%Y - %m - %d') createdAt, date_format(n.modifiedAt, '%Y - %m - %d') modifiedAt,
+			    u.email authorEmail, u.name authorName 
+		  from notice n, user u
+		 where n.authorNo = u.no
+		 order by no desc
+		 limit #{start}, #{sizePerPage}
+	</select>
+	
+	<select id="selectNotice" parameterType="int" resultType="Notice">
+		select n.*, date_format(n.createdAt, '%Y - %m - %d') createdAt, date_format(n.modifiedAt, '%Y - %m - %d') modifiedAt,
+			    u.email authorEmail, u.name authorName 
+		  from notice n, user u
+		 where n.authorNo = u.no
+		   and n.no = #{no}
+	</select>
+	
+	<select id="selectAllNoticesCount" resultType="int">
+		select count(*)
+		  from notice
+	</select>	
+	
+	<select id="selectAllFiles" parameterType="String"
+		resultType="NoticeFile">
+		select saveFolder, originFile, saveFile
+		  from noticeFile
+		 where noticeNo in (${noticeNos})
+	</select>
+	
+	<insert id="insertNotice" parameterType="Notice" 
+		useGeneratedKeys="true" keyProperty="no">
+		insert into notice (title, authorNo, content, createdAt)
+		values (#{title}, #{authorNo}, #{content}, now())
+	</insert>
+	
+	<insert id="insertFile" parameterType="Notice">
+		insert into noticeFile (noticeNo, saveFolder, originFile, saveFile)
+		values (#{no}, #{image.saveFolder}, #{image.originFile}, #{image.saveFile})	
+	</insert>
+	
+	<update id="updateNotice" parameterType="Notice">
+		update notice
+		   set title = #{title}, content = #{content}, modifiedAt = now()
+		 where no = #{no}
+	</update>
+	
+	<update id="updateViewCnt" parameterType="int">
+		update notice
+		   set viewCnt = viewCnt + 1 
+	     where no = #{no}
+	</update>
+	
+	<update id="updateFile" parameterType="Notice">
+		update noticeFile
+		   set saveFolder = #{image.saveFolder}, originFile = #{image.originFile}, saveFile = #{image.saveFile}
+		 where noticeNo = #{no}
+	</update>
+	
+	<delete id="deleteNotice" parameterType="String">
+		delete from notice
+		 where no in (${nos})
+	</delete>
+	
+	<delete id="deleteFile" parameterType="String">
+		delete from noticeFile
+		 where noticeNo in (${noticeNos})
+	</delete>
+</mapper>

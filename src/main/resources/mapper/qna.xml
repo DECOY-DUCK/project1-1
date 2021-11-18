@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.happyhouse.model.mapper.QnAMapper">
+	<resultMap type="QnA" id="qnaList">
+		<result column="no" property="no" />
+		<collection property="replies" column="no"
+			javaType="java.util.List" ofType="QnAReply" select="selectQnAReplies" />
+	</resultMap>
+
+	<select id="selectAllQnAs" parameterType="int"
+		resultMap="qnaList">
+		select q.no, q.authorNo, q.title, q.content, q.password, date_format(q.createdAt, '%Y-%m-%d') as createdAt, date_format(q.modifiedAt, '%Y-%m-%d') as modifiedAt, 
+				u.email authorEmail, u.name authorName
+		from qna q, user u
+		where q.authorNo = u.no
+		order by no desc
+		limit #{start}, #{sizePerPage}
+	</select>
+
+	<select id="selectAllQnAsCount" resultType="int">
+		select count(no)
+		from qna
+	</select>
+
+	<select id="selectQnA" parameterType="int" resultMap="qnaList">
+		select q.no, q.authorNo, q.title, q.content, date_format(q.createdAt, '%Y-%m-%d') as createdAt, date_format(q.modifiedAt, '%Y-%m-%d') as modifiedAt, 
+				u.email authorEmail, u.name authorName
+		from qna q, user u
+		where q.authorNo = u.no
+		and q.no = #{no}
+		and (#{password} is null and 1=1) or (#{password} is not null and q.password = #{password})
+	</select>
+
+	<select id="selectQnAReplies" parameterType="int"
+		resultType="QnAReply">
+		select q.no, q.authorNo, q.qnaNo, q.content, date_format(q.createdAt, '%Y-%m-%d') as createdAt, date_format(q.modifiedAt, '%Y-%m-%d') as modifiedAt, 
+				u.email authorEmail, u.name authorName
+		from qnareply q, user u
+		where q.authorNo = u.no
+		and q.qnaNo = #{qnaNo}
+	</select>
+
+	<insert id="insertQnA" parameterType="QnA">
+		insert into qna (title, authorNo, content, createdAt, password)
+		values (#{title}, #{authorNo}, #{content}, now(), #{password})
+	</insert>
+
+	<update id="updateQnA" parameterType="QnA">
+		update qna
+		set title = #{title}, content = #{content}, password = #{password}, modifiedAt = now()
+		where no = #{no}
+	</update>
+
+	<delete id="deleteQnAReplies" parameterType="int">
+		delete from qnareply
+		where qnaNo = #{qnaNo}
+	</delete>
+
+	<delete id="deleteQnA" parameterType="int">
+		delete from qna
+		where no = #{no}
+	</delete>
+
+	<insert id="insertQnAReply" parameterType="QnAReply">
+		insert into qnareply (qnaNo, authorNo, content, createdAt)
+		values (#{qnaNo}, #{authorNo}, #{content}, now())
+	</insert>
+
+	<update id="updateQnAReply" parameterType="QnAReply">
+		update qnareply
+		set content = #{content}, modifiedAt = now()
+		where no = #{no}
+	</update>
+
+	<delete id="deleteQnAReply" parameterType="int">
+		delete from qnareply
+		where no = #{no}
+	</delete>
+</mapper>
+

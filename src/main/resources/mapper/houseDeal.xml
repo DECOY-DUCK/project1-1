@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.happyhouse.model.mapper.HouseDealMapper">
+	<select id="selectSido" resultType="sidoGugunCode">
+		select left(code,2) as sidoCode, name as sidoName
+		  from sidocode
+		 order by code
+	</select>
+	
+	<select id="selectGugunInSido" parameterType="string" resultType="sidoGugunCode">
+		select distinct left(dongCode,4) as gugunCode, gugun as gugunName
+		  from baseaddress 
+		 where left(code,2) = #{sido} 
+		 order by code
+	</select>
+	
+	<select id="selectDongInGugun" parameterType="string" resultType="dongCode">
+		select dong, code
+		  from baseaddress 
+		 where left(code,4) = #{gugun}  
+		 order by code
+	</select>
+	
+	<select id="selectHouseDealInDong" parameterType="map" resultType="houseDeal">
+		select * 
+		  from housedeal 
+		 where code like concat(#{gugunCode}, '%') 
+		   and dong = #{dong}
+		 order by aptName 
+		 limit #{start}, #{sizePerPage}
+	</select>
+</mapper>

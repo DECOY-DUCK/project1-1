@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.happyhouse.model.mapper.InterestAreaMapper">
+	<select id="selectAllInterestAreas" resultType="InterestArea" parameterType="int">
+		select *, date_format(createdAt, '%Y - %m - %d') createdAt
+		  from interestarea
+		 where userNo = #{userNo}
+	</select>
+	
+	<select id="selectInterestArea" resultType="InterestArea" parameterType="map">
+		select *, date_format(createdAt, '%Y - %m - %d') createdAt
+		  from interestarea
+		 where userNo = #{userNo} 
+		   and dongCode = #{dongCode}
+	</select>
+	
+	<insert id="insertInterestArea" parameterType="map">
+		insert into interestarea (userNo, dongCode, createdAt)
+		values (#{userNo}, #{dongCode}, now())
+	</insert>
+	
+	<delete id="deleteInterestArea" parameterType="map">
+		delete from interestarea 
+		 where userNo = #{userNo} 
+		   and dongCode = #{dongCode}
+	</delete>
+
+</mapper>

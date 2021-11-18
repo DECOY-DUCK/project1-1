@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.happyhouse.model.mapper.EnvironmentMapper">
+	<select id="selectAllHospitalsInGugun" resultType="SafeHospital">
+		select * 
+		from safehospital 
+		where address like concat( #{sido}, '%', #{gugun}, '%')
+	</select>
+	
+	<select id="selectAllHospitalsInSido" parameterType="string" resultType="SafeHospital">
+		select * 
+		from safehospital 
+		where address like concat( #{sido}, '%')
+	</select>
+	
+	<select id="selectAllClinicsInGugun" parameterType="string" resultType="SelectedClinic">
+		select * 
+		from selectedclinic 
+		where address like concat( #{sido}, '%', #{gugun}, '%')
+	</select>
+	
+	<select id="selectAllClinicsInSido" parameterType="string" resultType="SelectedClinic">
+		select * 
+		from selectedclinic 
+		where address like concat( #{sido}, '%')
+	</select>
+</mapper>
