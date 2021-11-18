@@ -45,7 +45,7 @@ public interface AuthService {
 	 * @param password	: 비밀번호 
 	 * @return 해당 회원 정보 
 	 */
-	User getUserInfo(int no, String password);
+	LoginUser getUserInfo(int no, String password);
 
 	/**
 	 * 회원 정보를 받아서 수정한다.
@@ -61,5 +61,5 @@ public interface AuthService {
 	 * @param no : 회원 고유 번호
 	 * @return 성공 여부
 	 */
-	String withdrawal(int no);
+	boolean withdrawal(int no);
 }

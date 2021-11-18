@@ -4,13 +4,13 @@
 
 <mapper namespace="com.ssafy.happyhouse.model.mapper.AuthMapper">
 	<select id="selectUserByEmail" resultType="User" parameterType="String">
-		select no, email, password, name, authCode, date_format(deleteDate, '%Y-%m-%d') as deleteDate 
+		select no, email, password, name, authCode, token, date_format(deleteDate, '%Y-%m-%d') as deleteDate 
 		  from user 
 		 where email = #{email}
 	</select>
 	
 	<select id="selectUserByNo" resultType="User" parameterType="int">
-		select no, email, password, name, authCode, date_format(deleteDate, '%Y-%m-%d') as deleteDate  
+		select no, email, password, name, authCode, token, date_format(deleteDate, '%Y-%m-%d') as deleteDate  
 		  from user 
 		 where no = #{no}
 	</select>
