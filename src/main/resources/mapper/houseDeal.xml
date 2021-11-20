@@ -12,22 +12,32 @@
 	<select id="selectGugunInSido" parameterType="string" resultType="sidoGugunCode">
 		select distinct left(dongCode,4) as gugunCode, gugun as gugunName
 		  from baseaddress 
-		 where left(code,2) = #{sido} 
+		 where left(code,2) = #{sidoCode} 
 		 order by code
 	</select>
 	
 	<select id="selectDongInGugun" parameterType="string" resultType="dongCode">
 		select dong, code
 		  from baseaddress 
-		 where left(code,4) = #{gugun}  
+		 where left(code,4) = #{gugunCode}  
 		 order by code
 	</select>
 	
-	<select id="selectHouseDealInDong" parameterType="map" resultType="houseDeal">
+	<select id="selectAllHouseDealsInDong" parameterType="map" resultType="houseDeal">
+		select *  
+		  from housedeal
+         where aptName=#{aptName}
+           and dong = #{dongName}
+           and code like concat(#{gugunCode}, '%') 
+         order by dealYear desc, area
+         limit #{start}, #{sizePerPage}
+	</select>
+	
+	<select id="selectAllHouseInfosInDong" parameterType="map" resultType="houseInfo">
 		select * 
-		  from housedeal 
+		  from houseinfo 
 		 where code like concat(#{gugunCode}, '%') 
-		   and dong = #{dong}
+		   and dong = #{dongName}
 		 order by aptName 
 		 limit #{start}, #{sizePerPage}
 	</select>

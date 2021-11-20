@@ -22,7 +22,7 @@ public class NoticeServiceImpl implements NoticeService {
 	@Override
 	public Map<String, Object> getNotices(int pageNo, int sizePerPage) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		int start = (pageNo - 1) * sizePerPage;
+		int start = pageNo == 0 ? 0 : sizePerPage * pageNo + 1;
 
 		List<Notice> list = noticeMapper.selectAllNotices(start, sizePerPage);
 
