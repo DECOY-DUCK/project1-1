@@ -34,6 +34,8 @@ public class NoticeServiceImpl implements NoticeService {
 
 	@Override
 	public Notice getNotice(int no) {
+		updateNoticeViewCnt(no);
+		
 		return noticeMapper.selectNotice(no);
 	}
 
@@ -61,23 +63,36 @@ public class NoticeServiceImpl implements NoticeService {
 
 	@Override
 	@Transactional
-	public boolean updateNotice(Notice notice) {
+	public boolean updateNotice(Notice notice, String path) {
 		if (noticeMapper.updateNotice(notice) == 0) {
 			return false;
 		}
 
 		NoticeFile image = notice.getImage();
 		int no = notice.getNo();
-
-		if (image != null) {
-			if (noticeMapper.selectAllFiles(no + "").isEmpty()) {
-				if (noticeMapper.insertFile(notice) == 0) {
-					return false;
+		List<NoticeFile> images = noticeMapper.selectAllFiles(no + "");
+		
+		if(images.isEmpty()) { // 기존에 저장된 이미지가 없는 경우
+			if (image != null && noticeMapper.insertFile(notice) == 0) {
+				return false;
+			}
+		} else { // 기존에 저장된 이미지가 있는 경우
+			 // 새로 저장할 이미지가 있는 경우
+			if(image != null) {
+				// 기존과 같은 이미지면 무시 
+				if(images.get(0).getOriginFile() == image.getOriginFile()) {
+					return true;
 				}
-			} else {
+				// 기존과 다른 이미지면 업데이트 
 				if (noticeMapper.updateFile(notice) == 0) {
 					return false;
 				}
+			}
+			
+			// 기존 이미지 삭제
+			for (NoticeFile img : images) {
+				File file = new File(path + File.separator + img.getSaveFolder() + File.separator + img.getSaveFile());
+				file.delete();
 			}
 		}
 
