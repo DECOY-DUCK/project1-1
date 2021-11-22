@@ -25,7 +25,7 @@ import com.ssafy.happyhouse.model.dto.LoginUser;
 import com.ssafy.happyhouse.model.dto.User;
 import com.ssafy.happyhouse.model.service.AuthService;
 import com.ssafy.happyhouse.model.service.JwtService;
-import com.ssafy.happyhouse.model.service.MailService;
+
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
