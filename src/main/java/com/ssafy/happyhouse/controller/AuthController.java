@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,7 +31,7 @@ import com.ssafy.happyhouse.model.service.JwtService;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-@CrossOrigin(origins = "*")
+
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -46,12 +45,17 @@ public class AuthController {
 	
 	@Autowired
 	private JwtService jwtService;
+
 	
 	@ApiOperation(value = "회원 전부를 조회한다. db 조회 성공 시 전체 회원 목록을  반환한다.", response = List.class)
 	@GetMapping("userinfo")
 	public ResponseEntity<List<LoginUser>> getUserInfo(){
 		return new ResponseEntity<List<LoginUser>>(authService.getUserInfoList(), HttpStatus.OK);
 	}
+
+
+
+
 	// LoginUser는 클라이언트로 보낼 요약 정보 생각하고 작성했어요. 수업에서 한 세션스토리지 저장말고 HttpOnly 쿠키 생각했는데  세션스토리지로 작성하시는 게 편할거에요 
 	@ApiOperation(value = "입력받은 회원 정보를 조회한다. db 조회 성공 시 HttpOnly 쿠키에 'token'을 저장하고 LoginUser를 반환한다.", response =  LoginUser.class)
 	@PostMapping("login")
