@@ -6,6 +6,8 @@ import java.util.Map;
 
 import javax.servlet.ServletContext;
 
+
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
@@ -32,6 +34,7 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @RequestMapping("/notice")
 public class NoticeController {
+
 	private static final String SUCCESS = "success";
 	private static final String FAIL = "fail";
 
@@ -89,7 +92,7 @@ public class NoticeController {
 
 	@ApiOperation(value = "입력받은 정보로 no에 해당하는 공지사항을 수정한다. db 수정 성공 여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@PutMapping("{no}")
-	public ResponseEntity<String> updateNotice(@PathVariable int no, @RequestBody Notice notice) {
+	public ResponseEntity<String> updateNotice(@PathVariable int no, Notice notice) {
 		notice.setNo(no);
 
 		if (noticeService.updateNotice(notice, servletContext.getRealPath(""))) {
@@ -102,7 +105,8 @@ public class NoticeController {
 	@ApiOperation(value = "no에 해당하는 공지사항들을 삭제한다. db 삭제 성공 여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@DeleteMapping("{nos}")
 	public ResponseEntity<String> deleteNotice(@PathVariable String nos) {
-		if (noticeService.deleteNotice(nos, servletContext.getRealPath(""))) {
+		
+		if (noticeService.deleteNotice(nos, multipartProperties.getLocation())) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
 
