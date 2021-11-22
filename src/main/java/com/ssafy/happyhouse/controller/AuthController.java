@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -45,14 +46,13 @@ public class AuthController {
 	// LoginUser는 클라이언트로 보낼 요약 정보 생각하고 작성했어요. 수업에서 한 세션스토리지 저장말고 HttpOnly 쿠키 생각했는데  세션스토리지로 작성하시는 게 편할거에요 
 	@ApiOperation(value = "입력받은 회원 정보를 조회한다. db 조회 성공 시 HttpOnly 쿠키에 'token'을 저장하고 LoginUser를 반환한다.", response =  LoginUser.class)
 	@PostMapping("login")
-	public ResponseEntity<LoginUser> login( User user) {
+	public ResponseEntity<LoginUser> login(@RequestBody User user) {
 		
 		HttpStatus status = null;
 		LoginUser loginUser =null;
 				
 		try {
 			loginUser = authService.login(user);
-			
 			
 			if(loginUser !=null) {
 				//loginUser에 token 추가
@@ -77,7 +77,7 @@ public class AuthController {
 	// 회원가입 성공하면 클라이언트 쪽에서 로그인 페이지로 리다이렉트하는거 생각하고 작성했어요. 
 	@ApiOperation(value = "입력받은 회원 정보를 저장한다. db 입력성공 여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response =  String.class)
 	@PostMapping("signup")
-	public ResponseEntity<String> signup(User user) {
+	public ResponseEntity<String> signup(@RequestBody User user) {
 		String result = "";
 		HttpStatus status =null;
 		logger.debug(user.getEmail());
@@ -87,7 +87,7 @@ public class AuthController {
 				status = HttpStatus.ACCEPTED;
 				result = SUCCESS;
 			}else {
-				
+
 				status = HttpStatus.ACCEPTED;
 				result = FAIL;
 			}
@@ -97,12 +97,12 @@ public class AuthController {
 			logger.error("회원가입 실패:{}",e);
 			status= HttpStatus.INTERNAL_SERVER_ERROR;
 		}
-		return new ResponseEntity<String>(result,status);
+		return new ResponseEntity<String>(result, status);
 	}
 
 	@ApiOperation(value = "입력받은 email 정보를 조회한다. db 조회 성공 여부에 따라 0 또는 1을 반환한다.", response = Integer.class)
 	@PostMapping("signup/idcheck")
-	public ResponseEntity<Integer> idCheck(String email) {
+	public ResponseEntity<Integer> idCheck(@RequestBody String email) {
 		int result =authService.idCheck(email);
 //		logger.debug(Integer.toString(result));
 		return new ResponseEntity<Integer>(result,HttpStatus.OK);
@@ -117,7 +117,7 @@ public class AuthController {
 
 	@ApiOperation(value = "입력받은 회원 정보를 조회한다. db 조회 성공 여부에 따라 회원 이메일로 임시 비밀번호를 발송하고,'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@PostMapping("findpwd")
-	public ResponseEntity<String> findPwd(User user) {
+	public ResponseEntity<String> findPwd(@RequestBody User user) {
 		String msg ="";
 		HttpStatus status = null;
 				
@@ -149,7 +149,7 @@ public class AuthController {
 
 	@ApiOperation(value = "no에 해당하는 회원 정보를 수정한다. db 수정 성공 여부에 따라 loginUser를 반환한다.", response = String.class)
 	@PutMapping("mypage/{no}")
-	public ResponseEntity<LoginUser> updateUserInfo(@PathVariable int no,User user) {
+	public ResponseEntity<LoginUser> updateUserInfo(@PathVariable int no,@RequestBody User user) {
 		
 		LoginUser loginUser =null;
 		HttpStatus status = null;
@@ -203,7 +203,7 @@ public class AuthController {
 	} else {
 		logger.error("사용 불가능 토큰!!!");
 		resultMap.put("message", FAIL);
-		status = HttpStatus.ACCEPTED;
+		status = HttpStatus.UNAUTHORIZED; 
 	}
 	return new ResponseEntity<Map<String, Object>>(resultMap, status);
 		
