@@ -51,6 +51,7 @@ public class NoticeController {
 	@ApiOperation(value = "입력받은 영역에 해당하는 공지사항을 조회한다. db 조회 성공 시 공지사항 목록과 전체 공지사항 수를 담은 map 객체를  반환한다.", response = Map.class)
 	@GetMapping
 	public ResponseEntity<Map<String, Object>> getNotices(int pageNo, int sizePerPage) {
+
 		return new ResponseEntity<Map<String, Object>>(noticeService.getNotices(pageNo, sizePerPage), HttpStatus.OK);
 	}
 

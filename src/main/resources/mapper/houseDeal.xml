@@ -30,7 +30,6 @@
            and dong = #{dongName}
            and code like concat(#{gugunCode}, '%') 
          order by dealYear desc, area
-         limit #{start}, #{sizePerPage}
 	</select>
 	
 	<select id="selectAllHouseInfosInDong" parameterType="map" resultType="houseInfo">
