@@ -1,9 +1,17 @@
 package com.ssafy.happyhouse.model.service;
 
+import java.util.List;
+
 import com.ssafy.happyhouse.model.dto.LoginUser;
 import com.ssafy.happyhouse.model.dto.User;
 
 public interface AuthService {
+	/**
+	 * 등록된 회원 정보를 받아온다
+	 * 
+	 * @return
+	 */
+	List<LoginUser> getUserInfoList();
 	/**
 	 * 회원 정보(email, password)를 받아서 해당 회원의 정보를 받아온다.
 	 * 
@@ -70,4 +78,11 @@ public interface AuthService {
 	 * @return 성공 여부
 	 */
 	boolean withdrawal(int no);
+	/**
+	 * 관리자가 회원을 강제 퇴장 시킨다.
+	 * 
+	 * @param no
+	 * @return 성공 여부
+	 */
+	boolean delete(int no);
 }

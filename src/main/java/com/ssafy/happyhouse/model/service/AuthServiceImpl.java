@@ -1,5 +1,7 @@
 package com.ssafy.happyhouse.model.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import org.mindrot.jbcrypt.BCrypt;
@@ -167,6 +169,32 @@ public class AuthServiceImpl implements AuthService {
 		loginUser.setAuthCode(data.getAuthCode());
 
 		return loginUser;
+	}
+
+	@Override
+	public List<LoginUser> getUserInfoList() {
+		List<User> list = authmapper.getUserInfoList();
+		List<LoginUser> result = new ArrayList<LoginUser>();
+		for (int i = 0; i < list.size(); i++) {
+			LoginUser data = new LoginUser();
+			data.setNo(list.get(i).getNo());
+			data.setEmail(list.get(i).getEmail());
+			data.setName(list.get(i).getName());
+			data.setAuthCode(list.get(i).getAuthCode());
+			data.setDeleteDate(list.get(i).getDeleteDate());
+			
+			result.add(data);
+		}
+		
+		return result;
+	}
+
+	@Override
+	public boolean delete(int no) {
+		if(authmapper.delete(no) == 1) {
+			return true;
+		}
+		return false;
 	}
 
 }

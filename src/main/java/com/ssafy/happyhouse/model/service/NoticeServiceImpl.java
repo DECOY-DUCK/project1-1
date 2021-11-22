@@ -5,17 +5,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ssafy.happyhouse.controller.AuthController;
 import com.ssafy.happyhouse.model.dto.Notice;
 import com.ssafy.happyhouse.model.dto.NoticeFile;
 import com.ssafy.happyhouse.model.mapper.NoticeMapper;
 
 @Service
 public class NoticeServiceImpl implements NoticeService {
-
+	public static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 	@Autowired
 	private NoticeMapper noticeMapper;
 
@@ -98,12 +101,14 @@ public class NoticeServiceImpl implements NoticeService {
 	public boolean deleteNotice(String nos, String path) {
 		List<NoticeFile> images = noticeMapper.selectAllFiles(nos);
 		if (noticeMapper.deleteFile(nos) == 0) {
+			
 			return false;
 		}
-		if (noticeMapper.deleteNotice(nos) == 0) {
+		if (noticeMapper.deleteNotice(nos)==0) {
+			logger.debug("들어감");
 			return false;
 		}
-
+		if(images==null)return false;
 		for (NoticeFile image : images) {
 			File file = new File(path + File.separator + image.getSaveFolder() + File.separator + image.getSaveFile());
 			file.delete();
