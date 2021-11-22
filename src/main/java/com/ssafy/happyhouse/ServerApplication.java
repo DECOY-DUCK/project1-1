@@ -5,13 +5,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.PropertySource;
 
-import com.ssafy.happyhouse.config.AdminKeyConfig;
-import com.ssafy.happyhouse.config.AuthKeyConfig;
-import com.ssafy.happyhouse.config.CorsConfig;
+import com.ssafy.happyhouse.config.AdminKeyProperties;
+import com.ssafy.happyhouse.config.AuthKeyProperties;
+import com.ssafy.happyhouse.config.CorsProperties;
+import com.ssafy.happyhouse.config.MultipartProperties;
 
 @SpringBootApplication
 @PropertySource("classpath:/application.properties")
-@EnableConfigurationProperties(value = {AuthKeyConfig.class, AdminKeyConfig.class, CorsConfig.class})
+@EnableConfigurationProperties(value = {AuthKeyProperties.class, AdminKeyProperties.class, CorsProperties.class, MultipartProperties.class})
 public class ServerApplication {
 
 	public static void main(String[] args) {

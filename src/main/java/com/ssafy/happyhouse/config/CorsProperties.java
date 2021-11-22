@@ -3,7 +3,7 @@ package com.ssafy.happyhouse.config;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties(prefix = "custom.cors")
-public class CorsConfig {
+public class CorsProperties {
 	private String devOrigin;
 	// private String origin;
 

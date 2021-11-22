@@ -8,11 +8,12 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import com.ssafy.happyhouse.config.AuthKeyProperties;
 import com.ssafy.happyhouse.exception.UnAuthorizedException;
 
 import io.jsonwebtoken.Claims;
@@ -20,34 +21,33 @@ import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
-
-
 @Service
 public class JwtServiceImpl implements JwtService {
 
 	public static final Logger logger = LoggerFactory.getLogger(JwtServiceImpl.class);
 	
-	@Value("${custom.auth.jwt-secret}")
-	private String secret;
-	
-	@Value("${custom.auth.jwt-expired-sec}")
-	private int expired_sec ;
-	
-
+	@Autowired
+	private AuthKeyProperties authKeyProperties;
 	
 	//토큰생성
 	@Override
 	public <T> String create(String key, T data, String subject) {
-		String jwt = Jwts.builder().setHeaderParam("typ", "JWT").setHeaderParam("regDate", System.currentTimeMillis())
-				.setExpiration(new Date(System.currentTimeMillis() + expired_sec))
-				.setSubject(subject).claim(key, data).signWith(SignatureAlgorithm.HS256, this.generateKey()).compact();
+		String jwt = Jwts.builder()
+				.setHeaderParam("typ", "JWT")
+				.setHeaderParam("regDate", System.currentTimeMillis())
+				.setExpiration(new Date(System.currentTimeMillis() + authKeyProperties.getJwtExpiresSec()))
+				.setSubject(subject)
+				.claim(key, data)
+				.signWith(SignatureAlgorithm.HS256, this.generateKey())
+				.compact();
+		
 		return jwt;
 	}
 
 	private byte[] generateKey() {
 		byte[] key = null;
 		try {
-			key = secret.getBytes("UTF-8");
+			key = authKeyProperties.getJwtSecret().getBytes("UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			if (logger.isInfoEnabled()) {
 				e.printStackTrace();
@@ -84,7 +84,7 @@ public class JwtServiceImpl implements JwtService {
 		String jwt = request.getHeader("access-token");
 		Jws<Claims> claims = null;
 		try {
-			claims = Jwts.parser().setSigningKey(secret.getBytes("UTF-8")).parseClaimsJws(jwt);
+			claims = Jwts.parser().setSigningKey(authKeyProperties.getJwtSecret().getBytes("UTF-8")).parseClaimsJws(jwt);
 		} catch (Exception e) {
 //			if (logger.isInfoEnabled()) {
 //				e.printStackTrace();
