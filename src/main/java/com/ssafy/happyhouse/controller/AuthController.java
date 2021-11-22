@@ -3,7 +3,6 @@ package com.ssafy.happyhouse.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -17,8 +16,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+<<<<<<< HEAD
+=======
 import org.springframework.web.bind.annotation.RequestBody;
 
+>>>>>>> branch 'master' of https://lab.ssafy.com/cocov2222/happyhouse_final_daejeon_3_-_.git
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,7 +28,6 @@ import com.ssafy.happyhouse.model.dto.LoginUser;
 import com.ssafy.happyhouse.model.dto.User;
 import com.ssafy.happyhouse.model.service.AuthService;
 import com.ssafy.happyhouse.model.service.JwtService;
-
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
