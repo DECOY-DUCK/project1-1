@@ -1,9 +1,17 @@
 package com.ssafy.happyhouse.model.service;
 
+import java.util.List;
+
 import com.ssafy.happyhouse.model.dto.LoginUser;
 import com.ssafy.happyhouse.model.dto.User;
 
 public interface AuthService {
+	/**
+	 * 등록된 회원 정보를 받아온다
+	 * 
+	 * @return
+	 */
+	List<LoginUser> getUserInfoList();
 	/**
 	 * 회원 정보(email, password)를 받아서 해당 회원의 정보를 받아온다.
 	 * 

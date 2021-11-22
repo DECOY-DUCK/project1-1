@@ -1,5 +1,7 @@
 package com.ssafy.happyhouse.model.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.ssafy.happyhouse.model.dto.User;
@@ -19,4 +21,6 @@ public interface AuthMapper {
 	int updateUser(User user);
 
 	int updateUserDeleteDate(int no);
+	
+	List<User> getUserInfoList();
 }
