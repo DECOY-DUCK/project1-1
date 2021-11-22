@@ -7,6 +7,10 @@
 		<result column="no" property="no"/>
 		<association property="image" column="no" javaType="NoticeFile" select="selectAllFiles"/>
 	</resultMap>
+	<resultMap type="Notice" id="noticeOne">
+		<result column="no" property="no"/>
+		<association property="image" column="no" javaType="NoticeFile" select="selectFile"/>
+	</resultMap>
 	
 	<select id="selectAllNotices" parameterType="int" resultMap="noticeList">
 		select n.no no, n.authorNo authorNo, n.viewCnt viewCnt, n.title title, n.content content,
@@ -18,7 +22,7 @@
 		 limit #{start}, #{sizePerPage}
 	</select>
 	
-	<select id="selectNotice" parameterType="int" resultType="Notice">
+	<select id="selectNotice" parameterType="int" resultMap="noticeOne">
 		select n.no no, n.authorNo authorNo, n.viewCnt viewCnt, n.title title, n.content content, 
 			   date_format(n.createdAt, '%Y - %m - %d') createdAt, date_format(n.modifiedAt, '%Y - %m - %d') modifiedAt,
 			   u.email authorEmail, u.name authorName 
@@ -37,6 +41,13 @@
 		select saveFolder, originFile, saveFile
 		  from noticeFile
 		 where noticeNo in (${noticeNos})
+	</select>
+	
+	<select id="selectFile" parameterType="int"
+		resultType="NoticeFile">
+		select saveFolder, originFile, saveFile
+		  from noticeFile
+		 where noticeNo = #{noticeNo}
 	</select>
 	
 	<insert id="insertNotice" parameterType="Notice" 

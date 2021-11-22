@@ -17,6 +17,8 @@ public interface NoticeMapper {
 	int selectAllNoticesCount();
 
 	List<NoticeFile> selectAllFiles(String noticeNos);
+	
+	NoticeFile selectFile(int noticeNo);
 
 	int insertNotice(Notice notice);
 
