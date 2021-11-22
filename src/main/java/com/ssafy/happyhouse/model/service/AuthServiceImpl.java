@@ -186,4 +186,12 @@ public class AuthServiceImpl implements AuthService {
 		return result;
 	}
 
+	@Override
+	public boolean delete(int no) {
+		if(authmapper.delete(no) == 1) {
+			return true;
+		}
+		return false;
+	}
+
 }

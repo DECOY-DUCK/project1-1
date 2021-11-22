@@ -48,7 +48,7 @@ public class AuthController {
 	private JwtService jwtService;
 	
 	@ApiOperation(value = "회원 전부를 조회한다. db 조회 성공 시 전체 회원 목록을  반환한다.", response = List.class)
-	@GetMapping("UserInfo")
+	@GetMapping("userinfo")
 	public ResponseEntity<List<LoginUser>> getUserInfo(){
 		return new ResponseEntity<List<LoginUser>>(authService.getUserInfoList(), HttpStatus.OK);
 	}
@@ -186,7 +186,15 @@ public class AuthController {
 		return new ResponseEntity<String>(msg,HttpStatus.ACCEPTED);
 	}
 
-	
+	@ApiOperation(value = "no에 해당하는 회원의 탈퇴일(deleteDate)를 수정한다. db 수정 성공 여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@DeleteMapping("admin/{no}")
+	public ResponseEntity<String> exileUser(@PathVariable int no) {
+		String msg =FAIL;
+		if( authService.delete(no)) {
+			msg=SUCCESS;
+		}
+		return new ResponseEntity<String>(msg,HttpStatus.ACCEPTED);
+	}
 	// 이건 수업에서 @GetMapping("/info/{useremail}") getInfo 함수랑 비슷한 기능으로 생각한겁니다.
 	@ApiOperation(value = "로그인한 회원의 token의 유효성을 확인한다. 성공 시  회원 정보를 반환한다.", response = Map.class)
 	@GetMapping("me/{email}")

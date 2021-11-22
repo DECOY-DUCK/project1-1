@@ -23,4 +23,6 @@ public interface AuthMapper {
 	int updateUserDeleteDate(int no);
 	
 	List<User> getUserInfoList();
+	
+	int delete(int no);
 }

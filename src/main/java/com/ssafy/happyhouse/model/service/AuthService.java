@@ -78,4 +78,11 @@ public interface AuthService {
 	 * @return 성공 여부
 	 */
 	boolean withdrawal(int no);
+	/**
+	 * 관리자가 회원을 강제 퇴장 시킨다.
+	 * 
+	 * @param no
+	 * @return 성공 여부
+	 */
+	boolean delete(int no);
 }
