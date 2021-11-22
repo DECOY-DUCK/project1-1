@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ssafy.happyhouse.config.MultipartProperties;
 import com.ssafy.happyhouse.model.dto.Notice;
 import com.ssafy.happyhouse.model.dto.NoticeFile;
 import com.ssafy.happyhouse.model.service.NoticeService;
@@ -41,6 +42,9 @@ public class NoticeController {
 
 	@Autowired
 	private ResourceLoader resourceLoader;
+	
+	@Autowired
+	private MultipartProperties multipartProperties;
 
 	@ApiOperation(value = "입력받은 영역에 해당하는 공지사항을 조회한다. db 조회 성공 시 공지사항 목록과 전체 공지사항 수를 담은 map 객체를  반환한다.", response = Map.class)
 	@GetMapping
@@ -57,9 +61,9 @@ public class NoticeController {
 			String fileName = System.currentTimeMillis() + "_" + attach.getOriginalFilename();
 			image.setOriginFile(attach.getOriginalFilename());
 			image.setSaveFile(fileName);
-			image.setSaveFolder("/resources/upload/notice");
+			image.setSaveFolder("/upload/notice");
 
-			Resource resource = resourceLoader.getResource("/resources/upload/notice");
+			Resource resource = resourceLoader.getResource("file:" + multipartProperties.getLocation() + "upload/notice");
 			File dir = new File(resource.getFile().getCanonicalPath());
 	
 			if (!dir.exists()) dir.mkdirs();
