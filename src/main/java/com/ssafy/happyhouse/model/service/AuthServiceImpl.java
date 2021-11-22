@@ -56,8 +56,11 @@ public class AuthServiceImpl implements AuthService {
 	@Override
 	public boolean signup(User user) {
 		boolean flag = false;
-		// AuthCode 기본값 U로 넣어주세요
-		user.setAuthCode("U");
+		
+		if(user.getAuthCode() == null) {
+			user.setAuthCode("U");
+		}
+	
 		// DB에 저장할 비밀번호 암호화
 		String encrypted_pwd = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
 		user.setPassword(encrypted_pwd);
