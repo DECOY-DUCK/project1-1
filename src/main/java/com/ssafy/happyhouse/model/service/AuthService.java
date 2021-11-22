@@ -21,6 +21,14 @@ public interface AuthService {
 	boolean signup(User user);
 	
 	/**
+	 * 회원정보 확인
+	 * 
+	 * @param email
+	 * @return
+	 */
+	LoginUser getUserInfobyemail(String email);
+	
+	/**
 	 * 이메일을 받아서 해당하는 회원이 있는지 조회한다.
 	 * 
 	 * @param email : 이메일  

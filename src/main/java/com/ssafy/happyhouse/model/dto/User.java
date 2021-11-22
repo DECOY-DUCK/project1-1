@@ -78,4 +78,10 @@ public class User {
 		this.deleteDate = deleteDate;
 	}
 
+	@Override
+	public String toString() {
+		return "User [no=" + no + ", email=" + email + ", password=" + password + ", name=" + name + ", authCode="
+				+ authCode + ", joinDate=" + joinDate + ", deleteDate=" + deleteDate + "]";
+	}
+
 }

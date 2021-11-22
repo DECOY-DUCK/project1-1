@@ -22,6 +22,7 @@
 		   and name = #{name} 
 	</select>
 	
+	
 	<insert id="insertUser" parameterType="User">
 		insert into user (email, password, name, authCode, joinDate)
 		values (#{email}, #{password}, #{name}, #{authCode} ,now())
@@ -38,4 +39,6 @@
 		   set deleteDate = now()
 		 where no = #{no}
 	</update>
+	
+	
 </mapper>
