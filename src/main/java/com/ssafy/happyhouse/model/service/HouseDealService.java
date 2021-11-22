@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.ssafy.happyhouse.model.dto.DongCode;
 import com.ssafy.happyhouse.model.dto.HouseDeal;
+import com.ssafy.happyhouse.model.dto.HouseInfo;
 import com.ssafy.happyhouse.model.dto.SidoGugunCode;
 
 public interface HouseDealService {
@@ -30,12 +31,20 @@ public interface HouseDealService {
 	 * @return 해당 구군의 동 목록
 	 */
 	List<DongCode> getDongInGugun(String gugun);
+	
+	/**
+	 * 동 이름, 동이 속한 구군의 코드, 현재 페이지 번호를 받아서 해당 지역의 주택 목록을 받아온다.
+	 * 
+	 * @param map : dong, gugunCode, pageNo, sizePerPage
+	 * @return 해당 페이지와 선택된 지역의 주택 목록
+	 */
+	List<HouseInfo> getHouseInfoInDong(Map<String, Object> map);
+	
 
 	/**
-	 * 동 이름, 동이 속한 구군의 코드, 현재 페이지 번호를 받아서 해당 지역의 주택 거래 목록을 받아온다.
+	 * 아파트 이름, 동 이름, 동이 속한 구군의 코드, 현재 페이지 번호를 받아서 해당 지역의 주택 거래 목록을 받아온다.
 	 * 
-	 * @param gugunCode : 선택된 구군 코드
-	 * @param map : dong, pageNo, sizePerPage
+	 * @param map : aptName, dong, gugunCode, pageNo, sizePerPage
 	 * @return 해당 페이지와 선택된 지역의 주택 거래 목록
 	 */
 	List<HouseDeal> getHouseDealInDong(Map<String, Object> map);

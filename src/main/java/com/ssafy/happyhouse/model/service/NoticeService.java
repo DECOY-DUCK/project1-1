@@ -26,16 +26,14 @@ public interface NoticeService {
 	 * 식별 번호를 받아서 조회 수를 올린다.
 	 * 
 	 * @param no : 공지사항 식별번호
-	 * @return 해당하는 공지사항 정보
 	 */
 	void updateNoticeViewCnt(int no);
 
 	/**
 	 * 공지사항 정보를 받아서 등록한다.
 	 * 
-	 * @param notice      : 공지사항 정보
-	 * @param sizePerPage : 한 페이지 당 데이터 수
-	 * @return 1페이지에 속한 공지사항 목록과 전체 공지사항 수
+	 * @param notice : 공지사항 정보
+	 * @return 등록 성공 여부
 	 */
 	boolean createNotice(Notice notice);
 
@@ -43,17 +41,17 @@ public interface NoticeService {
 	 * 공지사항 정보를 받아서 업데이트한다.
 	 * 
 	 * @param notice : 공지사항 정보
-	 * @return 업데이트된 공지사항
+	 * @param path   : 기존 파일이 저장된 경로
+	 * @return 업데이트 성공 여부
 	 */
-	boolean updateNotice(Notice notice);
+	boolean updateNotice(Notice notice, String path);
 
 	/**
 	 * 공지사항 식별 번호들을 받아서 삭제한다.
 	 * 
-	 * @param nos         : 공지사항 번호
-	 * @param path        : 파일 경로
-	 * @param sizePerPage : 한 페이지 당 데이터 수
-	 * @return 1페이지에 속한 공지사항 목록과 전체 공지사항 수
+	 * @param nos  : 공지사항 번호
+	 * @param path : 기존 파일이 저장된 경로
+	 * @return 삭제 성공 여부
 	 */
 	boolean deleteNotice(String nos, String path);
 }

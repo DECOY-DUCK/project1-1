@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.ssafy.happyhouse.model.dto.DongCode;
 import com.ssafy.happyhouse.model.dto.HouseDeal;
+import com.ssafy.happyhouse.model.dto.HouseInfo;
 import com.ssafy.happyhouse.model.dto.SidoGugunCode;
 
 @Mapper
@@ -19,4 +20,6 @@ public interface HouseDealMapper {
 	List<DongCode> selectDongInGugun(String gugun);
 
 	List<HouseDeal> selectAllHouseDealsInDong(Map<String, Object> map);
+	
+	List<HouseInfo> selectAllHouseInfosInDong(Map<String, Object> map);
 }

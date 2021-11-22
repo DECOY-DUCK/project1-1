@@ -52,15 +52,16 @@ public class NoticeController {
 	@PostMapping
 	public ResponseEntity<String> createNotice(Notice notice, MultipartFile attach) throws IOException {
 		NoticeFile image = new NoticeFile();
-
+     
 		if(attach != null) {
 			String fileName = System.currentTimeMillis() + "_" + attach.getOriginalFilename();
 			image.setOriginFile(attach.getOriginalFilename());
 			image.setSaveFile(fileName);
 			image.setSaveFolder("/resources/upload/notice");
-			
+
 			Resource resource = resourceLoader.getResource("/resources/upload/notice");
 			File dir = new File(resource.getFile().getCanonicalPath());
+	
 			if (!dir.exists()) dir.mkdirs();
 
 			attach.transferTo(new File(dir, fileName));
@@ -77,6 +78,7 @@ public class NoticeController {
 	@ApiOperation(value = "no에 해당하는 공지사항을 조회한다. db 조회 성공 시 공지사항을 반환한다.", response = Notice.class)
 	@GetMapping("{no}")
 	public ResponseEntity<Notice> getNotice(@PathVariable int no) {
+		   // 유저 처리하는 거 보고  읽는 유저 no랑 authorNo 비교해서 update cnt 할 수 있도록 수정
 		return new ResponseEntity<Notice>(noticeService.getNotice(no), HttpStatus.OK);
 	}
 
@@ -85,7 +87,7 @@ public class NoticeController {
 	public ResponseEntity<String> updateNotice(@PathVariable int no, @RequestBody Notice notice) {
 		notice.setNo(no);
 
-		if (noticeService.updateNotice(notice)) {
+		if (noticeService.updateNotice(notice, servletContext.getRealPath(""))) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
 
