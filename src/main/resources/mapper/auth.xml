@@ -44,7 +44,7 @@
 	</update>
 	
 	<delete id="delete" parameterType="int">
-	delete from user where no = #{no]
+	delete from user where no = #{no}
 	 </delete>
 	
 	
