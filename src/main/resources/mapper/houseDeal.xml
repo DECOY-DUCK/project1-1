@@ -20,7 +20,7 @@
 		select dong, code
 		  from baseaddress 
 		 where left(code,4) = #{gugunCode}  
-		 order by code
+		 order by dong
 	</select>
 	
 	<select id="selectAllHouseDealsInDong" parameterType="map" resultType="houseDeal">
