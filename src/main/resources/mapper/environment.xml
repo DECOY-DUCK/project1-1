@@ -5,25 +5,25 @@
 <mapper namespace="com.ssafy.happyhouse.model.mapper.EnvironmentMapper">
 	<select id="selectAllHospitalsInGugun" resultType="SafeHospital">
 		select * 
-		from safehospital 
-		where address like concat( #{sido}, '%', #{gugun}, '%')
+		  from safehospital 
+		 where address like concat( #{sido}, '%', #{gugun}, '%')
 	</select>
 	
 	<select id="selectAllHospitalsInSido" parameterType="string" resultType="SafeHospital">
 		select * 
-		from safehospital 
-		where address like concat( #{sido}, '%')
+		  from safehospital 
+		 where address like concat( #{sido}, '%')
 	</select>
 	
 	<select id="selectAllClinicsInGugun" parameterType="string" resultType="SelectedClinic">
 		select * 
-		from selectedclinic 
-		where address like concat( #{sido}, '%', #{gugun}, '%')
+		  from selectedclinic 
+		 where address like concat( #{sido}, '%', #{gugun}, '%')
 	</select>
 	
 	<select id="selectAllClinicsInSido" parameterType="string" resultType="SelectedClinic">
 		select * 
-		from selectedclinic 
-		where address like concat( #{sido}, '%')
+		  from selectedclinic 
+		 where address like concat( #{sido}, '%')
 	</select>
 </mapper>

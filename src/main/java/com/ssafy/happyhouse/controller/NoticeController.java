@@ -28,7 +28,6 @@ import com.ssafy.happyhouse.model.service.NoticeService;
 
 import io.swagger.annotations.ApiOperation;
 
-@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/notice")
 public class NoticeController {

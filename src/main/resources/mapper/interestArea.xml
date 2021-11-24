@@ -4,13 +4,13 @@
 
 <mapper namespace="com.ssafy.happyhouse.model.mapper.InterestAreaMapper">
 	<select id="selectAllInterestAreas" resultType="InterestArea" parameterType="int">
-		select *, date_format(createdAt, '%Y - %m - %d') createdAt
+		select dongCode, userNo, date_format(createdAt, '%Y-%m-%d') createdAt
 		  from interestarea
 		 where userNo = #{userNo}
 	</select>
 	
 	<select id="selectInterestArea" resultType="InterestArea" parameterType="map">
-		select *, date_format(createdAt, '%Y - %m - %d') createdAt
+		select dongCode, userNo, date_format(createdAt, '%Y-%m-%d') createdAt
 		  from interestarea
 		 where userNo = #{userNo} 
 		   and dongCode = #{dongCode}

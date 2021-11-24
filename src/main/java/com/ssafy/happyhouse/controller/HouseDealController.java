@@ -20,7 +20,7 @@ import com.ssafy.happyhouse.model.dto.SidoGugunCode;
 import com.ssafy.happyhouse.model.service.HouseDealService;
 
 import io.swagger.annotations.ApiOperation;
-@CrossOrigin(origins = "*")
+
 @RestController
 @RequestMapping("/housedeal")
 public class HouseDealController {

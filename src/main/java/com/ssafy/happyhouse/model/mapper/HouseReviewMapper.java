@@ -12,15 +12,21 @@ public interface HouseReviewMapper {
 
 	List<HouseReview> selectAllHouseReviews(Map<String, Object> map);
 
-	int selectAllHouseReviewsCount();
+	int selectAllHouseReviewsCount(int aptNo);
 
 	HouseReview selectHouseReview(int no);
 
 	List<Integer> selectHouseReviewLikes(int no);
-	
-	int insertHouseReview(HouseReview HouseReview);
-	
-	int updateHouseReview(HouseReview HouseReview);
+
+	int selectAllHouseReviewsLikesCount(int no);
+
+	int insertHouseReview(HouseReview houseReview);
+
+	int updateHouseReview(HouseReview houseReview);
 
 	int deleteHouseReview(int no);
+
+	int insertHouseReviewLike(int reviewNo, int userNo);
+
+	int deleteHouseReviewLike(int reviewNo, int userNo);
 }

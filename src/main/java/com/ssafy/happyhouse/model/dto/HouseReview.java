@@ -7,6 +7,7 @@ public class HouseReview {
 	private int no;
 	private int aptNo;
 	private int authorNo;
+	private String authorEmail;
 	private String authorName;
 	private String content;
 	private String createdAt;
@@ -75,6 +76,14 @@ public class HouseReview {
 
 	public void setLikeUsers(List<Integer> likeUsers) {
 		this.likeUsers = likeUsers;
+	}
+
+	public String getAuthorEmail() {
+		return authorEmail;
+	}
+
+	public void setAuthorEmail(String authorEmail) {
+		this.authorEmail = authorEmail;
 	}
 
 }

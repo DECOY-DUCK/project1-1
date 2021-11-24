@@ -12,11 +12,15 @@ import com.ssafy.happyhouse.model.dto.HouseDeal;
 import com.ssafy.happyhouse.model.dto.HouseInfo;
 import com.ssafy.happyhouse.model.dto.SidoGugunCode;
 import com.ssafy.happyhouse.model.mapper.HouseDealMapper;
+import com.ssafy.happyhouse.utils.Pagination;
 
 @Service
 public class HouseDealServiceImpl implements HouseDealService{
 	@Autowired
 	private HouseDealMapper houseDealMapper;
+	
+	@Autowired
+	private Pagination pagination;
 
 	@Override
 	public List<SidoGugunCode> getSido() {
@@ -36,7 +40,7 @@ public class HouseDealServiceImpl implements HouseDealService{
 	@Override
 	public List<HouseInfo> getHouseInfoInDong(Map<String, Object> map) {
 		Map<String, Object> param = new HashMap<String, Object>();
-		setStartIndex(map, param);
+		pagination.setStartIndex(map, param);
 
 		param.put("dongName", (String)map.get("dongName"));
 		param.put("gugunCode", (String)map.get("gugunCode"));
@@ -49,7 +53,7 @@ public class HouseDealServiceImpl implements HouseDealService{
 	@Override
 	public List<HouseDeal> getHouseDealInDong(Map<String, Object> map) {
 		Map<String, Object> param = new HashMap<String, Object>();
-		setStartIndex(map, param);
+		pagination.setStartIndex(map, param);
 		
 		param.put("aptName", (String)map.get("aptName"));
 		param.put("dongName", (String)map.get("dongName"));
@@ -58,15 +62,5 @@ public class HouseDealServiceImpl implements HouseDealService{
 		return houseDealMapper.selectAllHouseDealsInDong(param);
 	}
 
-	
-	private void setStartIndex(Map<String, Object> map, Map<String, Object> param) {
-		int spp = Integer.parseInt((String)map.get("sizePerPage"));
-		int pageNo = Integer.parseInt((String)map.get("pageNo"));
-	
-		int start = pageNo == 0 ? 0 : spp * pageNo + 1;
-
-		param.put("start", start);
-		param.put("sizePerPage", spp);
-	}
 	
 }
