@@ -8,6 +8,8 @@ public class User {
 	private String authCode;
 	private String joinDate;
 	private String deleteDate;
+	private String temp;
+	private String authkey;
 
 	public User() {}
 	 
@@ -20,6 +22,22 @@ public class User {
 		this.authCode = authCode;
 		this.joinDate = joinDate;
 		this.deleteDate = deleteDate;
+	}
+	
+	public String getTemp() {
+		return temp;
+	}
+
+	public void setTemp(String temp) {
+		this.temp = temp;
+	}
+
+	public String getauthkey() {
+		return authkey;
+	}
+
+	public void setauthkey(String authkey) {
+		this.authkey = authkey;
 	}
 
 	public int getNo() {

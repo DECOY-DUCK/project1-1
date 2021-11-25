@@ -13,11 +13,13 @@ public interface AuthMapper {
 	User selectUserByEmail(String email);
 
 	User selectUserByNo(int no);
-
+	
+	int selectAuthkey(User user);
+	
 	int selectUserCountByEmailName(User user);
 
 	int insertUser(User user);
-
+	int updataAuthkey(User user);
 	int updateUser(User user);
 
 	int updateUserDeleteDate(int no);

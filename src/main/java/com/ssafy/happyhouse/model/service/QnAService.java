@@ -14,7 +14,7 @@ public interface QnAService {
 	 * @param sizePerPage : 한 페이지 당 데이터 수  
 	 * @return 해당 영역에 속한 qna 목록과 전체 qna 수
 	 */	
-	Map<String, Object> getQnAs(int pageNo, int sizePerPage);
+	List<QnA> getQnAs();
 
 	/**
 	 * 해당 회원의 qna를 조회한다.

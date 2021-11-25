@@ -62,6 +62,16 @@ public class AuthServiceImpl implements AuthService {
 		if(user.getAuthCode() == null) {
 			user.setAuthCode("U");
 		}
+		String pwd = UUID.randomUUID().toString().replaceAll("-", ""); 
+		pwd = pwd.substring(0, 10); 
+		
+		user.setauthkey(pwd);
+		user.setTemp("0");
+		
+		//인증메일 보내기
+		StringBuilder cntnt = new StringBuilder();
+		cntnt.append("인증 번호는 ").append(pwd).append( "입니다");
+		mailService.sendEmail(user.getEmail(), "가입해주셔서  감사힙니다 인증번호를 발급해 드립니다", cntnt.toString());
 	
 		// DB에 저장할 비밀번호 암호화
 		String encrypted_pwd = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
@@ -77,7 +87,9 @@ public class AuthServiceImpl implements AuthService {
 	public int idCheck(String email) {
 		int result = 0;
 		User user = authmapper.selectUserByEmail(email);
+		
 		if (user != null) {
+			System.out.println(1);
 			result = 1;
 		}
 		return result;
@@ -107,7 +119,7 @@ public class AuthServiceImpl implements AuthService {
 			logger.debug("임시 비밀번호 보냄");
 			StringBuilder cntnt = new StringBuilder();
 			cntnt.append("임시비밀번호는 ").append(pwd).append( "입니다");
-			mailService.sendEmail("tph01198@naver.com", "안녕하세요,happyHouse입니다 임시비밀번호를 발급해 드립니다", cntnt.toString());
+			mailService.sendEmail(data.getEmail(), "안녕하세요,happyHouse입니다 임시비밀번호를 발급해 드립니다", cntnt.toString());
 		}
 		return result;
 	}
@@ -138,6 +150,7 @@ public class AuthServiceImpl implements AuthService {
 		user.setPassword(encrypted_pwd);
 		if (authmapper.updateUser(user) == 1) {
 			flag = true;
+			
 		}
 		return flag;
 
@@ -196,6 +209,16 @@ public class AuthServiceImpl implements AuthService {
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public int authkeyCheck(User user) {
+		if(authmapper.selectAuthkey(user)==1) {
+			int result =authmapper.updataAuthkey(user);
+			System.out.println(result);
+			return result;
+		}
+		return 0;
 	}
 
 }

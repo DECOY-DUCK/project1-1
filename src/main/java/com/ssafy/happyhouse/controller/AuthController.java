@@ -93,7 +93,7 @@ public class AuthController {
 	public ResponseEntity<String> signup(@RequestBody User user) {
 		String result = "";
 		HttpStatus status =null;
-		logger.debug(user.getEmail());
+		
 		try {
 			if(authService.signup(user)){
 				
@@ -115,12 +115,22 @@ public class AuthController {
 
 	@ApiOperation(value = "입력받은 email 정보를 조회한다. db 조회 성공 여부에 따라 0 또는 1을 반환한다.", response = Integer.class)
 	@PostMapping("signup/idcheck")
-	public ResponseEntity<Integer> idCheck(@RequestBody String email) {
-		int result =authService.idCheck(email);
-//		logger.debug(Integer.toString(result));
+	public ResponseEntity<Integer> idCheck(@RequestBody HashMap<String, String> email) {
+		
+		int result = authService.idCheck(email.get("email"));
+	
 		return new ResponseEntity<Integer>(result,HttpStatus.OK);
 	}
-
+	
+	@ApiOperation(value = "입력받은 회원가입번호를 조회한다. db 조회 성공 여부에 따라 0 또는 1을 반환한다.", response = Integer.class)
+	@PostMapping("signup/authkeycheck")
+	public ResponseEntity<Integer> authkeycheck(@RequestBody User user) {
+		
+		int result = authService.authkeyCheck(user);
+		
+		return new ResponseEntity<Integer>(result,HttpStatus.OK);
+	}
+		
 	// 이것도 세션스토리지 사용하면 필요없을듯!
 //	@ApiOperation(value = "HttpOnly 쿠키에 저장한 'token'를 삭제한다. 성공 여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 //	@PostMapping("logout")

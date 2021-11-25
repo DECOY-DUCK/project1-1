@@ -11,6 +11,9 @@
 		  from user 
 		 where email = #{email}
 	</select>
+	<select id="selectAuthkey" resultType="int" parameterType="User">
+		select COUNT(*) from user where authkey = #{authkey} and email = #{email}
+	</select>
 	
 	<select id="selectUserByNo" resultType="User" parameterType="int">
 		select no, email, password, name, authCode, date_format(deleteDate, '%Y-%m-%d') as deleteDate  
@@ -27,10 +30,13 @@
 	
 	
 	<insert id="insertUser" parameterType="User">
-		insert into user (email, password, name, authCode, joinDate)
-		values (#{email}, #{password}, #{name}, #{authCode} ,now())
+		insert into user (email, password, name, authCode, authkey , temp , joinDate)
+		values (#{email}, #{password}, #{name}, #{authCode}, #{authkey}, #{temp}, now())
 	</insert>
-
+	<update id="updataAuthkey" parameterType="User">
+		update user
+		set authkey = 1 where email = #{email}
+	</update>
 	<update id="updateUser" parameterType="User">
 		update user 
 		   set name = #{name}, password = #{password}

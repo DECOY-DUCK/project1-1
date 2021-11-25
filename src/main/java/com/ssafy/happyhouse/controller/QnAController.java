@@ -34,8 +34,8 @@ public class QnAController {
 
 	@ApiOperation(value = "QnA 글목록", notes = "모든 문의글의 정보를 반환한다.", response = Map.class)
 	@GetMapping
-	public ResponseEntity<Map<String, Object>> getQnAs(int pageNo, int sizePerPage) {
-		return new ResponseEntity<Map<String, Object>>(qnaService.getQnAs(pageNo, sizePerPage), HttpStatus.OK);
+	public ResponseEntity<List<QnA>> getQnAs() {
+		return new ResponseEntity<List<QnA>>(qnaService.getQnAs(), HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "QnA 글보기", notes = " 해당유저의 문의글 정보를 반환한다.", response = QnA.class)
@@ -76,12 +76,12 @@ public class QnAController {
 	}
 
 	@ApiOperation(value = "QnA 댓글 작성", notes = "새로운 댓글 정보를 입력한다. db 입력 성공 여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
-	@PostMapping("/{qnaNo}/{no}")
-	public ResponseEntity<String> createQnAReply(@PathVariable int qnaNo, @PathVariable int no, QnAReply qnaReply) {
-		qnaReply.setNo(no);
-		qnaReply.setQnaNo(qnaNo);
+	@PostMapping("reply/{no}")
+	public ResponseEntity<String> createQnAReply(@PathVariable int no,@RequestBody QnAReply qnaReply) {
+		
+		qnaReply.setQnaNo(no);
 
-		if (qnaService.modifyQnAReply(qnaReply)) {
+		if (qnaService.createQnAReply(qnaReply)) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
 

@@ -11,12 +11,11 @@
 
 	<select id="selectAllQnAs" parameterType="int"
 		resultMap="qnaList">
-		select q.no, q.authorNo, q.title, q.content, q.password, date_format(q.createdAt, '%Y-%m-%d') as createdAt, date_format(q.modifiedAt, '%Y-%m-%d') as modifiedAt, 
+		select q.no, q.authorNo, q.title, q.content,q.category, date_format(q.createdAt, '%Y-%m-%d') as createdAt, date_format(q.modifiedAt, '%Y-%m-%d') as modifiedAt, 
 				u.email authorEmail, u.name authorName
 		from qna q, user u
 		where q.authorNo = u.no
-		order by no desc
-		limit #{start}, #{sizePerPage}
+		order by no desc;
 	</select>
 
 	<select id="selectAllQnAsCount" resultType="int">
@@ -29,7 +28,8 @@
 				u.email authorEmail, u.name authorName
 		from qna q join user u
         on q.authorNo = u.no
-		where q.authorNo = '47';
+		where q.authorNo = #{no}
+		order by no desc;
 	</select>
 
 	<select id="selectQnAReplies" parameterType="int"
@@ -48,7 +48,7 @@
 
 	<update id="updateQnA" parameterType="QnA">
 		update qna
-		set title = #{title}, content = #{content}, password = #{password}, modifiedAt = now()
+		set title = #{title}, content = #{content}, modifiedAt = now()
 		where no = #{no}
 	</update>
 
@@ -64,7 +64,7 @@
 
 	<insert id="insertQnAReply" parameterType="QnAReply">
 		insert into qnareply (qnaNo, authorNo, content, createdAt)
-		values (#{qnaNo}, #{authorNo}, #{content}, now())
+		values (1, #{authorNo}, #{content}, now())
 	</insert>
 
 	<update id="updateQnAReply" parameterType="QnAReply">

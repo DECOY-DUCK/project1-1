@@ -43,7 +43,8 @@ public interface AuthService {
 	 * @return 존재 여부에 따라 0 또는 1 
 	 */
 	int idCheck(String email);
-
+	
+	int authkeyCheck(User user);
 	// 비밀 번호 찾기할 때 쓰려고 작성한 겁니다. 
 	/**
 	 * 회원 정보(name, email)를 받아서 해당하는 회원이 있는지 조회한다.

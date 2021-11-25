@@ -20,15 +20,9 @@ public class QnAServiceImpl implements QnAService {
 	private QnAMapper qnaMapper;
 
 	@Override
-	public Map<String, Object> getQnAs(int pageNo, int sizePerPage) {
-		Map<String, Object> result = new HashMap<String, Object>();
-		int start = (pageNo - 1) * sizePerPage;
-
-		List<QnA> list = qnaMapper.selectAllQnAs(start, sizePerPage);
-		result.put("list", list);
-		result.put("count", qnaMapper.selectAllQnAsCount());
-
-		return result;
+	public List<QnA> getQnAs() {
+		
+		return qnaMapper.selectAllQnAs();
 	}
 
 	@Override

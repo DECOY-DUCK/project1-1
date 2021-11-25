@@ -11,7 +11,7 @@ import com.ssafy.happyhouse.model.dto.QnAReply;
 @Mapper
 public interface QnAMapper {
 
-	List<QnA> selectAllQnAs(int start, int sizePerPage);
+	List<QnA> selectAllQnAs();
 
 	int selectAllQnAsCount();
 
