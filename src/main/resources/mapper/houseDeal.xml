@@ -20,7 +20,7 @@
 		select dong, code
 		  from baseaddress 
 		 where left(code,4) = #{gugunCode}  
-		 order by code
+		 order by dong
 	</select>
 	
 	<select id="selectAllHouseDealsInDong" parameterType="map" resultType="houseDeal">
@@ -29,7 +29,11 @@
          where aptName=#{aptName}
            and dong = #{dongName}
            and code like concat(#{gugunCode}, '%') 
-         order by dealYear desc, area
+         order by area, cast(dealYear as unsigned) desc, 
+         		  cast(dealMonth as unsigned) desc, 
+         		  cast(dealDay as unsigned) desc
+         		  
+         <!-- limit #{start}, #{sizePerPage} -->
 	</select>
 	
 	<select id="selectAllHouseInfosInDong" parameterType="map" resultType="houseInfo">

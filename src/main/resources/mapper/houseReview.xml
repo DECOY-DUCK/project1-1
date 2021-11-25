@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.happyhouse.model.mapper.HouseReviewMapper">
+	<resultMap type="HouseReview" id="HouseReviewList">
+		<result column="no" property="no" />
+		<collection property="likeUsers" column="no"
+			javaType="java.util.List" ofType="Integer" select="selectHouseReviewLikes" />
+	</resultMap>
+
+	<select id="selectAllHouseReviews" parameterType="map"
+		resultMap="HouseReviewList">
+		select r.no no, r.aptNo aptNo, r.authorNo authorNo, r.content content, r.createdAt createdAt, r.modifiedAt modifiedAt, 
+				u.email authorEmail, u.name authorName
+		  from HouseReview r, user u
+		 where r.authorNo = u.no
+		   and r.aptNo = #{aptNo}
+		 order by no desc
+		 limit #{start}, #{sizePerPage}
+	</select>
+
+	<select id="selectAllHouseReviewsCount" parameterType="int" resultType="int">
+		select count(no)
+		  from HouseReview
+		 where aptNo = #{aptNo}
+	</select>
+
+	<select id="selectHouseReview" parameterType="int" resultMap="HouseReviewList">
+		select r.no no, r.aptNo aptNo, r.authorNo authorNo, r.content content, r.createdAt createdAt, r.modifiedAt modifiedAt, 
+				u.email authorEmail, u.name authorName
+		  from HouseReview r, user u
+		 where r.authorNo = u.no
+		   and r.no = #{no}
+	</select>
+	
+	<select id="selectHouseReviewLikes" parameterType="int" resultType="int">
+		select userNo		
+		  from HouseReviewLikes
+		 where reviewNo = #{reviewNo}
+	</select>
+	
+	<select id="selectAllHouseReviewsLikesCount" resultType="int">
+		select count(no)
+		  from HouseReviewLikes
+	</select>
+	
+	<insert id="insertHouseReview" parameterType="HouseReview">
+		insert into HouseReview (aptNo, authorNo, content, createdAt)
+		values (#{aptNo}, #{authorNo}, #{content}, now())
+	</insert>
+
+	<update id="updateHouseReview" parameterType="HouseReview">
+		update HouseReview
+		   set content = #{content}, modifiedAt = now()
+		 where no = #{no}
+	</update>
+
+	<delete id="deleteHouseReview" parameterType="int">
+		delete from HouseReview
+		 where no = #{no}
+	</delete>
+
+
+	<insert id="insertHouseReviewLike" parameterType="HouseReviewLikes">
+		insert into HouseReviewLikes (reviewNo, userNo, createdAt)
+		values (#{reviewNo}, #{userNo}, now())
+	</insert>
+
+	<delete id="deleteHouseReviewLike" parameterType="int">
+		delete from HouseReviewLikes
+		 where reviewNo = #{reviewNo}
+		   and userNo = #{userNo}
+	</delete>
+</mapper>
+

@@ -1,0 +1,97 @@
+package com.ssafy.happyhouse.controller;
+
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.ssafy.happyhouse.model.dto.HouseReview;
+import com.ssafy.happyhouse.model.service.HouseReviewService;
+
+import io.swagger.annotations.ApiOperation;
+
+@RestController
+@RequestMapping("/housereview")
+public class HouseReviewContoller {
+
+	private static final String SUCCESS = "success";
+	private static final String FAIL = "fail";
+
+	@Autowired
+	private HouseReviewService houseReviewService;
+
+	@ApiOperation(value = "입력받은 아파트 식별번호에 해당하는 리뷰를 조회한다. db 조회 성공 시 리뷰 목록과 전체 리뷰 수를 담은 map 객체를  반환한다.", response = Map.class)
+	@GetMapping
+	public ResponseEntity<Map<String, Object>> getHouses(@RequestParam Map<String, Object> map) {
+
+		return new ResponseEntity<Map<String, Object>>(houseReviewService.getHouseReviews(map), HttpStatus.OK);
+	}
+
+	@ApiOperation(value = "입력받은 리뷰 정보를 저장한다. db 입력 성공 여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@PostMapping
+	public ResponseEntity<String> createHouseReview(@RequestBody HouseReview houseReview) {
+
+		if (houseReviewService.createHouseReview(houseReview)) {
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+
+		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+	}
+
+	@ApiOperation(value = "no에 해당하는 리뷰를 조회한다. db 조회 성공 시 리뷰를 반환한다.", response = HouseReview.class)
+	@GetMapping("{no}")
+	public ResponseEntity<HouseReview> getHouseReview(@PathVariable int no) {
+		return new ResponseEntity<HouseReview>(houseReviewService.getHouseReview(no), HttpStatus.OK);
+	}
+
+	@ApiOperation(value = "입력받은 정보로 no에 해당하는 리뷰를 수정한다. db 수정 성공 여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@PutMapping("{no}")
+	public ResponseEntity<String> updateHouseReview(@PathVariable int no, @RequestBody HouseReview houseReview) {
+		houseReview.setNo(no);
+System.out.println(no);
+		if (houseReviewService.updateHouseReview(houseReview)) {
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+
+		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+	}
+
+	@ApiOperation(value = "no에 해당하는 리뷰를 삭제한다. db 삭제 성공 여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@DeleteMapping("{no}")
+	public ResponseEntity<String> deleteHouseReview(@PathVariable int no) {
+		if (houseReviewService.deleteHouseReview(no)) {
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+
+		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+	}
+
+	@ApiOperation(value = "reviewNo와 userNo에 해당하는 좋아요를 저장한다. db 삭제 성공 여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@PostMapping("{reviewNo}/{userNo}")
+	public ResponseEntity<String> saveInterestArea(@PathVariable int reviewNo, @PathVariable int userNo) {
+		if (houseReviewService.saveHouseReviewLike(reviewNo, userNo)) {
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+	}
+
+	@ApiOperation(value = "reviewNo와 userNo에 해당하는 좋아요를 삭제한다. db 삭제 성공 여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@DeleteMapping("{reviewNo}/{userNo}")
+	public ResponseEntity<String> deleteInterestArea(@PathVariable int reviewNo, @PathVariable int userNo) {
+		if (houseReviewService.deleteHouseReviewLike(reviewNo, userNo)) {
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+	}
+
+}
