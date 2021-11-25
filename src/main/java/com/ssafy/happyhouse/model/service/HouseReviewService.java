@@ -24,26 +24,27 @@ public interface HouseReviewService {
 	/**
 	 * 리뷰 정보를 받아서 등록한다.
 	 * 
-	 * @param houseReview : 리뷰 정보
-	 * @return 등록 성공 여부
+	 * @param map : 리뷰 와 페이지 정보
+	 * @return 해당 아파트의 한 페이지 리뷰 목록과 전체 리뷰 수
 	 */
-	boolean createHouseReview(HouseReview houseReview);
+	Map<String, Object> createHouseReview(Map<String, Object> map);
 
 	/**
 	 * 리뷰 정보를 받아서 업데이트한다.
 	 * 
-	 * @param houseReview : 리뷰 정보
-	 * @return 업데이트 성공 여부
+	 * @param map : 리뷰 와 페이지 정보
+	 * @return 해당 아파트의 한 페이지 리뷰 목록과 전체 리뷰 수
 	 */
-	boolean updateHouseReview(HouseReview houseReview);
+	Map<String, Object> updateHouseReview(Map<String, Object> map);
 
 	/**
 	 * 리뷰 식별 번호를 받아서 삭제한다.
 	 * 
 	 * @param no : 리뷰 번호
-	 * @return 삭제 성공 여부
+	 * @param map : 페이지 정보
+	 * @return 해당 아파트의 한 페이지 리뷰 목록과 전체 리뷰 수
 	 */
-	boolean deleteHouseReview(int no);
+	Map<String, Object> deleteHouseReview(int no, Map<String, Object> map);
 
 	/**
 	 * 리뷰 식별번호와 회원 식별번호를 받아서 리뷰 좋아요를 등록한다.

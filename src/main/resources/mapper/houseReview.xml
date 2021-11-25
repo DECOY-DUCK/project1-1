@@ -45,7 +45,7 @@
 		  from HouseReviewLikes
 	</select>
 	
-	<insert id="insertHouseReview" parameterType="HouseReview">
+	<insert id="insertHouseReview" parameterType="HouseReview" useGeneratedKeys="true" keyProperty="no">
 		insert into HouseReview (aptNo, authorNo, content, createdAt)
 		values (#{aptNo}, #{authorNo}, #{content}, now())
 	</insert>

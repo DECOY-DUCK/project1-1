@@ -37,15 +37,11 @@ public class HouseReviewContoller {
 		return new ResponseEntity<Map<String, Object>>(houseReviewService.getHouseReviews(map), HttpStatus.OK);
 	}
 
-	@ApiOperation(value = "입력받은 리뷰 정보를 저장한다. db 입력 성공 여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@ApiOperation(value = "입력받은 리뷰 정보를 저장한다. db 입력 성공 시 리뷰 목록과 전체 리뷰 수를 담은  map 객체를  반환한다.", response = Map.class)
 	@PostMapping
-	public ResponseEntity<String> createHouseReview(@RequestBody HouseReview houseReview) {
-
-		if (houseReviewService.createHouseReview(houseReview)) {
-			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
-		}
-
-		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+	public ResponseEntity<Map<String, Object>> createHouseReview(@RequestBody Map<String, Object> map) {
+	
+		return new ResponseEntity<Map<String, Object>>(houseReviewService.createHouseReview(map), HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "no에 해당하는 리뷰를 조회한다. db 조회 성공 시 리뷰를 반환한다.", response = HouseReview.class)
@@ -54,26 +50,19 @@ public class HouseReviewContoller {
 		return new ResponseEntity<HouseReview>(houseReviewService.getHouseReview(no), HttpStatus.OK);
 	}
 
-	@ApiOperation(value = "입력받은 정보로 no에 해당하는 리뷰를 수정한다. db 수정 성공 여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@ApiOperation(value = "입력받은 정보로 no에 해당하는 리뷰를 수정한다. db 수정 성공 시 리뷰 목록과 전체 리뷰 수를 담은  map 객체를  반환한다.", response = Map.class)
 	@PutMapping("{no}")
-	public ResponseEntity<String> updateHouseReview(@PathVariable int no, @RequestBody HouseReview houseReview) {
-		houseReview.setNo(no);
-System.out.println(no);
-		if (houseReviewService.updateHouseReview(houseReview)) {
-			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
-		}
+	public ResponseEntity<Map<String, Object>> updateHouseReview(@PathVariable int no, @RequestBody Map<String, Object> map) {
+		map.put("no", no);
 
-		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+		return new ResponseEntity<Map<String, Object>>(houseReviewService.updateHouseReview(map), HttpStatus.OK);
 	}
 
-	@ApiOperation(value = "no에 해당하는 리뷰를 삭제한다. db 삭제 성공 여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@ApiOperation(value = "no에 해당하는 리뷰를 삭제한다. db 삭제 성공 시 리뷰 목록과 전체 리뷰 수를 담은  map 객체를  반환한다.", response = Map.class)
 	@DeleteMapping("{no}")
-	public ResponseEntity<String> deleteHouseReview(@PathVariable int no) {
-		if (houseReviewService.deleteHouseReview(no)) {
-			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
-		}
-
-		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+	public ResponseEntity<Map<String, Object>> deleteHouseReview(@PathVariable int no, @RequestBody Map<String, Object> map) {
+		
+		return new ResponseEntity<Map<String, Object>>(houseReviewService.deleteHouseReview(no, map), HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "reviewNo와 userNo에 해당하는 좋아요를 저장한다. db 삭제 성공 여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)

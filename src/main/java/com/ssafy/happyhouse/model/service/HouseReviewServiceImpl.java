@@ -13,6 +13,9 @@ import com.ssafy.happyhouse.utils.Pagination;
 
 @Service
 public class HouseReviewServiceImpl implements HouseReviewService {
+	private static final String SUCCESS = "success";
+	private static final String FAIL = "fail";
+	
 	@Autowired
 	private HouseReviewMapper houseReviewMapper;
 	
@@ -40,18 +43,58 @@ public class HouseReviewServiceImpl implements HouseReviewService {
 	}
 
 	@Override
-	public boolean createHouseReview(HouseReview houseReview) {
-		return houseReviewMapper.insertHouseReview(houseReview) == 1;
+	public Map<String, Object> createHouseReview(Map<String, Object> map) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		HouseReview houseReview = new HouseReview();
+
+		houseReview.setAptNo(Integer.parseInt((String)map.get("aptNo")));
+		houseReview.setAuthorNo(Integer.parseInt((String)map.get("authorNo")));
+		System.out.println(houseReview.getAuthorNo());
+		houseReview.setContent((String)map.get("content"));
+		System.out.println(houseReview.getContent());
+		if(houseReviewMapper.insertHouseReview(houseReview) == 0) {
+			result.put("msg", FAIL);
+			return result;
+		}
+
+		result = getHouseReviews(map);
+		result.put("msg", SUCCESS);
+		
+		return result;
 	}
 
 	@Override
-	public boolean updateHouseReview(HouseReview houseReview) {
-		return houseReviewMapper.updateHouseReview(houseReview) == 1;
+	public Map<String, Object> updateHouseReview(Map<String, Object> map) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		HouseReview houseReview = new HouseReview();
+		
+		houseReview.setNo((int)map.get("no"));
+		houseReview.setContent((String)map.get("content"));
+		
+		if(houseReviewMapper.updateHouseReview(houseReview) == 0) {
+			result.put("msg", FAIL);
+			return result;
+		}
+	
+		result = getHouseReviews(map);
+		result.put("msg", SUCCESS);
+		
+		return result;
 	}
 
 	@Override
-	public boolean deleteHouseReview(int no) {
-		return houseReviewMapper.deleteHouseReview(no) == 1;
+	public Map<String, Object> deleteHouseReview(int no, Map<String, Object> map) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		
+		if(houseReviewMapper.deleteHouseReview(no) == 0) {
+			result.put("msg", FAIL);
+			return result;
+		}
+	
+		result = getHouseReviews(map);
+		result.put("msg", SUCCESS);
+		
+		return result;
 	}
 
 	@Override
