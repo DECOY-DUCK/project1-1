@@ -1,6 +1,7 @@
 package com.ssafy.happyhouse.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,14 +38,10 @@ public class QnAController {
 		return new ResponseEntity<Map<String, Object>>(qnaService.getQnAs(pageNo, sizePerPage), HttpStatus.OK);
 	}
 
-	@ApiOperation(value = "QnA 글보기", notes = "글번호에 해당하는 문의글의 정보를 반환한다.", response = QnA.class)
-	@GetMapping("/{no}")
-	public ResponseEntity<QnA> getQnA(@PathVariable int no, @RequestBody(required = false) String password) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("no", no);
-		map.put("password", password);
-
-		return new ResponseEntity<QnA>(qnaService.getQnA(map), HttpStatus.OK);
+	@ApiOperation(value = "QnA 글보기", notes = " 해당유저의 문의글 정보를 반환한다.", response = QnA.class)
+	@GetMapping("/{authorNo}")
+	public ResponseEntity<List<QnA>> getQnA(@PathVariable int authorNo) {
+		return new ResponseEntity<List<QnA>>(qnaService.getQnA(authorNo), HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "QnA 글작성", notes = "새로운 문의글 정보를 입력한다. db 입력 성공 여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)

@@ -3,7 +3,6 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ssafy.happyhouse.model.mapper.InterestAreaMapper">
-<<<<<<< HEAD
 	<resultMap type="HashMap" id="interestInfo">
 		<id column="code" property="code"/>
 		<id column="city" property="city"/>
@@ -19,10 +18,10 @@
 	</select>
 	<!-- <select id="selectAllInterestAreas" resultType="InterestArea" parameterType="int">
 		select *, date_format(createdAt, '%Y - %m - %d') createdAt
-=======
+
 	<select id="selectAllInterestAreas" resultType="InterestArea" parameterType="int">
 		select dongCode, userNo, date_format(createdAt, '%Y-%m-%d') createdAt
->>>>>>> branch 'master' of https://lab.ssafy.com/cocov2222/happyhouse_final_daejeon_3_-_.git
+ branch 'master' of https://lab.ssafy.com/cocov2222/happyhouse_final_daejeon_3_-_.git
 		  from interestarea
 		 where userNo = #{userNo}
 	</select> -->

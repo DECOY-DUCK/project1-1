@@ -12,7 +12,7 @@ public class QnA {
 	private String content;
 	private String createdAt;
 	private String modifiedAt;
-	private String password;
+	private String category;
 	private List<QnAReply> replies;
 
 	public int getNo() {
@@ -79,12 +79,14 @@ public class QnA {
 		this.modifiedAt = modifiedAt;
 	}
 
-	public String getPassword() {
-		return password;
+
+
+	public String getCategory() {
+		return category;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
 	public List<QnAReply> getReplies() {

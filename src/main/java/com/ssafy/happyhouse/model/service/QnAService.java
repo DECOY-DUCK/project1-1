@@ -1,5 +1,6 @@
 package com.ssafy.happyhouse.model.service;
 
+import java.util.List;
 import java.util.Map;
 
 import com.ssafy.happyhouse.model.dto.QnA;
@@ -16,12 +17,12 @@ public interface QnAService {
 	Map<String, Object> getQnAs(int pageNo, int sizePerPage);
 
 	/**
-	 * 식별 번호와 비밀번호를 받아서 qna을 조회한다.
+	 * 해당 회원의 qna를 조회한다.
 	 * 
 	 * @param map : no와 password 포함
 	 * @return 해당하는 qna 정보
 	 */
-	QnA getQnA(Map<String, Object> map);
+	List<QnA> getQnA(int authorNo);
 
 	/**
 	 * qna 정보를 받아서 등록한다.

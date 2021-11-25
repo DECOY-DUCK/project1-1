@@ -25,12 +25,11 @@
 	</select>
 
 	<select id="selectQnA" parameterType="int" resultMap="qnaList">
-		select q.no, q.authorNo, q.title, q.content, date_format(q.createdAt, '%Y-%m-%d') as createdAt, date_format(q.modifiedAt, '%Y-%m-%d') as modifiedAt, 
+		select q.no,q.category, q.authorNo, q.title, q.content, date_format(q.createdAt, '%Y-%m-%d') as createdAt, date_format(q.modifiedAt, '%Y-%m-%d') as modifiedAt,
 				u.email authorEmail, u.name authorName
-		from qna q, user u
-		where q.authorNo = u.no
-		and q.no = #{no}
-		and (#{password} is null and 1=1) or (#{password} is not null and q.password = #{password})
+		from qna q join user u
+        on q.authorNo = u.no
+		where q.authorNo = '47';
 	</select>
 
 	<select id="selectQnAReplies" parameterType="int"
@@ -43,8 +42,8 @@
 	</select>
 
 	<insert id="insertQnA" parameterType="QnA">
-		insert into qna (title, authorNo, content, createdAt, password)
-		values (#{title}, #{authorNo}, #{content}, now(), #{password})
+		insert into qna (title, authorNo, content, createdAt, category)
+		values (#{title}, #{authorNo}, #{content}, now(), #{category})
 	</insert>
 
 	<update id="updateQnA" parameterType="QnA">
