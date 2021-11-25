@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssafy.happyhouse.model.dto.InterestArea;
+
 import com.ssafy.happyhouse.model.service.InterestAreaService;
 
 import io.swagger.annotations.ApiOperation;
@@ -22,6 +24,7 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @RequestMapping("/interest")
 public class InterestAreaController {
+	public static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 	private static final String SUCCESS = "success";
 	private static final String FAIL = "fail";
 	
@@ -30,7 +33,7 @@ public class InterestAreaController {
 	
 	@ApiOperation(value = "userNo에 해당하는 관심지역을 조회한다. db 조회 성공 시 관심지역 목록을  반환한다.", response = List.class)
 	@GetMapping("{userNo}")
-	public ResponseEntity<List<InterestArea>> getInterestAreas(@PathVariable int userNo) {
+	public ResponseEntity<List<Map<String,Object>>> getInterestAreas(@PathVariable int userNo) {
 		return new ResponseEntity<>(interestAreaService.getInterestAreas(userNo), HttpStatus.OK);
 	}
 	

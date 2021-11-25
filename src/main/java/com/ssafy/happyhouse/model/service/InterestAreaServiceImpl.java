@@ -16,7 +16,7 @@ public class InterestAreaServiceImpl implements InterestAreaService{
 	private InterestAreaMapper interestAreaMapper;
 	
 	@Override
-	public List<InterestArea> getInterestAreas(int userNo) {
+	public List<Map<String, Object>> getInterestAreas(int userNo) {
 		return interestAreaMapper.selectAllInterestAreas(userNo);
 	}
 

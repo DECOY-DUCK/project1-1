@@ -12,7 +12,7 @@ public interface InterestAreaService {
 	 * @param userNo : 회원 식별번호
 	 * @return 해당 회원의 관심지역 전체 목록
 	 */
-	List<InterestArea> getInterestAreas(int userNo);
+	List<Map<String, Object>> getInterestAreas(int userNo);
 	
 	/**
 	 * 회원의 식별번호와 법정동 코드를 받아서 관심지역 여부를 확인한다.

@@ -154,9 +154,9 @@ public class AuthController {
 
 	@ApiOperation(value = "no와 password에 해당하는 회원 정보를 조회한다. db 조회 성공 시 LoginUser를  반환한다.", response = LoginUser.class)
 	@PostMapping("mypage/{no}")
-	public ResponseEntity<LoginUser> getUserInfo(@PathVariable int no, String password) {
+	public ResponseEntity<LoginUser> getUserInfo(@PathVariable int no,@RequestBody User user) {
 		
-		LoginUser loginUser = authService.getUserInfo(no, password);
+		LoginUser loginUser = authService.getUserInfo(no, user.getPassword());
 		return new ResponseEntity<LoginUser>(loginUser,HttpStatus.ACCEPTED);
 	}
 

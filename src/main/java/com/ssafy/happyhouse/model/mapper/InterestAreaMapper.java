@@ -9,8 +9,8 @@ import com.ssafy.happyhouse.model.dto.InterestArea;
 
 @Mapper
 public interface InterestAreaMapper {
-
-	List<InterestArea> selectAllInterestAreas(int userNo);
+	
+	List<Map<String,Object>> selectAllInterestAreas(int userNo);
 
 	InterestArea selectInterestArea(Map<String, Object> map);
 

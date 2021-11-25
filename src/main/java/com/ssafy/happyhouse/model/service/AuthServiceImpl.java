@@ -117,7 +117,7 @@ public class AuthServiceImpl implements AuthService {
 	public LoginUser getUserInfo(int no, String password) {
 		LoginUser loginUser = null;
 		User data = authmapper.selectUserByNo(no);
-		if (data != null && (BCrypt.checkpw(password, data.getPassword()) || data.getPassword().equals(password))) {
+		if (data != null && BCrypt.checkpw(password, data.getPassword())) {
 			loginUser = new LoginUser();
 
 			loginUser.setNo(data.getNo());
@@ -126,6 +126,7 @@ public class AuthServiceImpl implements AuthService {
 			loginUser.setDeleteDate(data.getDeleteDate());
 			loginUser.setAuthCode(data.getAuthCode());
 		}
+		
 		return loginUser;
 	}
 
