@@ -40,7 +40,7 @@ public class HouseReviewContoller {
 	@ApiOperation(value = "입력받은 리뷰 정보를 저장한다. db 입력 성공 시 리뷰 목록과 전체 리뷰 수를 담은  map 객체를  반환한다.", response = Map.class)
 	@PostMapping
 	public ResponseEntity<Map<String, Object>> createHouseReview(@RequestBody Map<String, Object> map) {
-	
+
 		return new ResponseEntity<Map<String, Object>>(houseReviewService.createHouseReview(map), HttpStatus.OK);
 	}
 
@@ -52,7 +52,8 @@ public class HouseReviewContoller {
 
 	@ApiOperation(value = "입력받은 정보로 no에 해당하는 리뷰를 수정한다. db 수정 성공 시 리뷰 목록과 전체 리뷰 수를 담은  map 객체를  반환한다.", response = Map.class)
 	@PutMapping("{no}")
-	public ResponseEntity<Map<String, Object>> updateHouseReview(@PathVariable int no, @RequestBody Map<String, Object> map) {
+	public ResponseEntity<Map<String, Object>> updateHouseReview(@PathVariable int no,
+			@RequestBody Map<String, Object> map) {
 		map.put("no", no);
 
 		return new ResponseEntity<Map<String, Object>>(houseReviewService.updateHouseReview(map), HttpStatus.OK);
@@ -60,27 +61,24 @@ public class HouseReviewContoller {
 
 	@ApiOperation(value = "no에 해당하는 리뷰를 삭제한다. db 삭제 성공 시 리뷰 목록과 전체 리뷰 수를 담은  map 객체를  반환한다.", response = Map.class)
 	@DeleteMapping("{no}")
-	public ResponseEntity<Map<String, Object>> deleteHouseReview(@PathVariable int no, @RequestBody Map<String, Object> map) {
-		
+	public ResponseEntity<Map<String, Object>> deleteHouseReview(@PathVariable int no,
+			@RequestBody Map<String, Object> map) {
+
 		return new ResponseEntity<Map<String, Object>>(houseReviewService.deleteHouseReview(no, map), HttpStatus.OK);
 	}
 
-	@ApiOperation(value = "reviewNo와 userNo에 해당하는 좋아요를 저장한다. db 삭제 성공 여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@ApiOperation(value = "reviewNo와 userNo에 해당하는 좋아요를 저장한다. db 등록 성공 여부에 따라 현재 리뷰의 좋아요 개수 또는 -1을 반환한다.", response = Integer.class)
 	@PostMapping("{reviewNo}/{userNo}")
-	public ResponseEntity<String> saveInterestArea(@PathVariable int reviewNo, @PathVariable int userNo) {
-		if (houseReviewService.saveHouseReviewLike(reviewNo, userNo)) {
-			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
-		}
-		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+	public ResponseEntity<Integer> saveInterestArea(@PathVariable int reviewNo, @PathVariable int userNo) {
+
+		return new ResponseEntity<Integer>(houseReviewService.saveHouseReviewLike(reviewNo, userNo), HttpStatus.OK);
 	}
 
-	@ApiOperation(value = "reviewNo와 userNo에 해당하는 좋아요를 삭제한다. db 삭제 성공 여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@ApiOperation(value = "reviewNo와 userNo에 해당하는 좋아요를 삭제한다. db 삭제성공 여부에 따라 현재 리뷰의 좋아요 개수 또는 -1을 반환한다.", response = Integer.class)
 	@DeleteMapping("{reviewNo}/{userNo}")
-	public ResponseEntity<String> deleteInterestArea(@PathVariable int reviewNo, @PathVariable int userNo) {
-		if (houseReviewService.deleteHouseReviewLike(reviewNo, userNo)) {
-			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
-		}
-		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+	public ResponseEntity<Integer> deleteInterestArea(@PathVariable int reviewNo, @PathVariable int userNo) {
+
+		return new ResponseEntity<Integer>(houseReviewService.deleteHouseReviewLike(reviewNo, userNo), HttpStatus.OK);
 	}
 
 }

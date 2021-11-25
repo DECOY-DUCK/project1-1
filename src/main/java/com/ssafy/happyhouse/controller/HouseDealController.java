@@ -45,6 +45,13 @@ public class HouseDealController {
 	public ResponseEntity<List<DongCode>> getDong(String gugunCode) {
 		return new ResponseEntity<List<DongCode>>(houseDealService.getDongInGugun(gugunCode), HttpStatus.OK);
 	}
+	
+	@ApiOperation(value = "입력받은 동에 해당하는 시도와 구군을 조회한다. db 조회 성공 시 시도와 구군을  반환한다.", response = SidoGugunCode.class)
+	@GetMapping("sidogugun")
+	public ResponseEntity<SidoGugunCode> getSidoGugunByDong(String dongCode) {
+		return new ResponseEntity<SidoGugunCode>(houseDealService.getSidoGugunByDong(dongCode), HttpStatus.OK);
+	}
+	
 
 	@ApiOperation(value = "입력받은 지역에 해당하는 전체 아파트 정보를 조회한다. db 조회 성공 시 아파트 정보를  반환한다.", response = List.class)
 	@GetMapping("apt")

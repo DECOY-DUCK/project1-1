@@ -33,6 +33,14 @@ public interface HouseDealService {
 	List<DongCode> getDongInGugun(String gugun);
 	
 	/**
+	 * 법정동 코드를 받아서 해당하는 코드에 속한 시도와 구군을 받아온다.
+	 * 
+	 * @param dongCode : 선택된 동 코드
+	 * @return 해당 동의 시도와 구군 
+	 */
+	SidoGugunCode getSidoGugunByDong(String dongCode);
+	
+	/**
 	 * 동 이름, 동이 속한 구군의 코드, 현재 페이지 번호를 받아서 해당 지역의 주택 목록을 받아온다.
 	 * 
 	 * @param map : dong, gugunCode, pageNo, sizePerPage

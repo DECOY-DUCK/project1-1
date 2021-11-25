@@ -98,13 +98,19 @@ public class HouseReviewServiceImpl implements HouseReviewService {
 	}
 
 	@Override
-	public boolean saveHouseReviewLike(int reviewNo, int userNo) {
-		return houseReviewMapper.insertHouseReviewLike(reviewNo, userNo) == 1;
+	public int saveHouseReviewLike(int reviewNo, int userNo) {
+		if(houseReviewMapper.insertHouseReviewLike(reviewNo, userNo) == 0) {
+			return -1;
+		}
+		return houseReviewMapper.selectAllHouseReviewLikesCount(reviewNo);
 	}
 
 	@Override
-	public boolean deleteHouseReviewLike(int reviewNo, int userNo) {
-		return houseReviewMapper.deleteHouseReviewLike(reviewNo, userNo) == 1;
+	public int deleteHouseReviewLike(int reviewNo, int userNo) {
+		if(houseReviewMapper.deleteHouseReviewLike(reviewNo, userNo) == 0) {
+			return -1;
+		}
+		return houseReviewMapper.selectAllHouseReviewLikesCount(reviewNo);
 	}
 
 }

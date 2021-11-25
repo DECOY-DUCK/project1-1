@@ -51,16 +51,16 @@ public interface HouseReviewService {
 	 * 
 	 * @param reviewNo : 리뷰 식별 번호
 	 * @param userNo   : 회원 식별 번호
-	 * @return 성공 여부
+	 * @return 해당 글의 좋아요 수 
 	 */
-	boolean saveHouseReviewLike(int reviewNo, int userNo);
+	int saveHouseReviewLike(int reviewNo, int userNo);
 
 	/**
 	 * 리뷰 식별번호와 회원 식별번호를 받아서 리뷰 좋아요를 해제한다.
 	 * 
 	 * @param reviewNo : 리뷰 식별 번호
 	 * @param userNo   : 회원 식별 번호
-	 * @return 성공 여부
+	 * @return 해당 글의 좋아요 수
 	 */
-	boolean deleteHouseReviewLike(int reviewNo, int userNo);
+    int deleteHouseReviewLike(int reviewNo, int userNo);
 }

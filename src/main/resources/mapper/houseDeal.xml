@@ -23,6 +23,13 @@
 		 order by dong
 	</select>
 	
+	<select id="selectSidoGugunByDong" parameterType="string" resultType="SidoGugunCode">
+		select distinct city as sidoName, left(code,2) as sidoCode, 
+				gugun as gugunName, left(code,4) as gugunCode
+		  from baseaddress 
+		 where dongCode = #{dongCode}
+	</select>
+	
 	<select id="selectAllHouseDealsInDong" parameterType="map" resultType="houseDeal">
 		select *  
 		  from housedeal

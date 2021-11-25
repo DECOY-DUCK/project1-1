@@ -40,9 +40,10 @@
 		 where reviewNo = #{reviewNo}
 	</select>
 	
-	<select id="selectAllHouseReviewsLikesCount" resultType="int">
-		select count(no)
+	<select id="selectAllHouseReviewLikesCount" resultType="int">
+		select count(*)
 		  from HouseReviewLikes
+		 where reviewNo = #{reviewNo} 
 	</select>
 	
 	<insert id="insertHouseReview" parameterType="HouseReview" useGeneratedKeys="true" keyProperty="no">
