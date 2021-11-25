@@ -51,4 +51,10 @@
 		 order by aptName 
 		 limit #{start}, #{sizePerPage}
 	</select>
+	
+	<select id="selectHouseInfosInNo" parameterType="int" resultType="houseInfo">
+		select * 
+		  from houseinfo 
+		 where no = #{no}
+	</select>
 </mapper>

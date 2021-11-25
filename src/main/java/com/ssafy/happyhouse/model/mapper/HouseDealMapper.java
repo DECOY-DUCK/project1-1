@@ -24,4 +24,6 @@ public interface HouseDealMapper {
 	List<HouseDeal> selectAllHouseDealsInDong(Map<String, Object> map);
 	
 	List<HouseInfo> selectAllHouseInfosInDong(Map<String, Object> map);
+	
+	HouseInfo selectHouseInfosInNo(int no);
 }

@@ -67,5 +67,8 @@ public class HouseDealServiceImpl implements HouseDealService{
 		return houseDealMapper.selectAllHouseDealsInDong(param);
 	}
 
-	
+	@Override
+	public HouseInfo getHouseInfosInNo(int no) {
+		return houseDealMapper.selectHouseInfosInNo(no);
+	}
 }

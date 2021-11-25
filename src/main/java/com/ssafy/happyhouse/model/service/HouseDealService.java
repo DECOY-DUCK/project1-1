@@ -48,7 +48,14 @@ public interface HouseDealService {
 	 */
 	List<HouseInfo> getHouseInfoInDong(Map<String, Object> map);
 	
-
+	/**
+	 * 아파트 식별 번호를 받아서  해당하는 아파트 기본 정보를 받아온다.
+	 * 
+	 * @param no : 아파트 식별 번호
+	 * @return 번호에 해당하는 아파트 기본 정보
+	 */
+	HouseInfo getHouseInfosInNo(int no);
+	
 	/**
 	 * 아파트 이름, 동 이름, 동이 속한 구군의 코드, 현재 페이지 번호를 받아서 해당 지역의 주택 거래 목록을 받아온다.
 	 * 
@@ -56,5 +63,4 @@ public interface HouseDealService {
 	 * @return 해당 페이지와 선택된 지역의 주택 거래 목록
 	 */
 	List<HouseDeal> getHouseDealInDong(Map<String, Object> map);
-
 }
