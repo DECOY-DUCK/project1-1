@@ -36,6 +36,11 @@ public class HouseDealServiceImpl implements HouseDealService{
 	public List<DongCode> getDongInGugun(String gugun) {
 		return houseDealMapper.selectDongInGugun(gugun);
 	}
+	
+	@Override
+	public SidoGugunCode getSidoGugunByDong(String dongCode) {
+		return houseDealMapper.selectSidoGugunByDong(dongCode);
+	}
 
 	@Override
 	public List<HouseInfo> getHouseInfoInDong(Map<String, Object> map) {
@@ -62,5 +67,8 @@ public class HouseDealServiceImpl implements HouseDealService{
 		return houseDealMapper.selectAllHouseDealsInDong(param);
 	}
 
-	
+	@Override
+	public HouseInfo getHouseInfosInNo(int no) {
+		return houseDealMapper.selectHouseInfosInNo(no);
+	}
 }

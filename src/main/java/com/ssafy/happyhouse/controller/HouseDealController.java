@@ -46,19 +46,31 @@ public class HouseDealController {
 		return new ResponseEntity<List<DongCode>>(houseDealService.getDongInGugun(gugunCode), HttpStatus.OK);
 	}
 
+	@ApiOperation(value = "입력받은 동에 해당하는 시도와 구군을 조회한다. db 조회 성공 시 시도와 구군을  반환한다.", response = SidoGugunCode.class)
+	@GetMapping("sidogugun")
+	public ResponseEntity<SidoGugunCode> getSidoGugunByDong(String dongCode) {
+		return new ResponseEntity<SidoGugunCode>(houseDealService.getSidoGugunByDong(dongCode), HttpStatus.OK);
+	}
+
 	@ApiOperation(value = "입력받은 지역에 해당하는 전체 아파트 정보를 조회한다. db 조회 성공 시 아파트 정보를  반환한다.", response = List.class)
 	@GetMapping("apt")
 	public ResponseEntity<List<HouseInfo>> getHouseInfos(@RequestParam Map<String, Object> map) {
 		return new ResponseEntity<List<HouseInfo>>(houseDealService.getHouseInfoInDong(map), HttpStatus.OK);
 	}
-	
+
+	@ApiOperation(value = "입력받은 지역에 해당하는 전체 아파트 정보를 조회한다. db 조회 성공 시 아파트 정보를  반환한다.", response = List.class)
+	@GetMapping("apt/{no}")
+	public ResponseEntity<HouseInfo> getHouseInfoByNo(@PathVariable int no) {
+		return new ResponseEntity<HouseInfo>(houseDealService.getHouseInfosInNo(no), HttpStatus.OK);
+	}
+
 	@ApiOperation(value = "입력받은 아파트 이름에 해당하는 아파트 거래 정보를 조회한다. db 조회 성공 시 거래 정보를  반환한다.", response = List.class)
 	@GetMapping("{aptName}")
-	public ResponseEntity<List<HouseDeal>> getHouseDeals(@PathVariable String aptName, @RequestParam Map<String, Object> map) {
-		// 개수가 없으면 공공데이터에서 가져오기 ?? + 3개년 치 공공데이터에서 가져오기? 
+	public ResponseEntity<List<HouseDeal>> getHouseDeals(@PathVariable String aptName,
+			@RequestParam Map<String, Object> map) {
+		// 개수가 없으면 공공데이터에서 가져오기 ?? + 3개년 치 공공데이터에서 가져오기?
 		map.put("aptName", aptName);
 		return new ResponseEntity<List<HouseDeal>>(houseDealService.getHouseDealInDong(map), HttpStatus.OK);
 	}
-	
-	
+
 }

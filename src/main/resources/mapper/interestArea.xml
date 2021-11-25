@@ -16,6 +16,7 @@
 		on b.code = a.dongCode
 		where userNo = #{no};
 	</select>
+
 	<!-- <select id="selectAllInterestAreas" resultType="InterestArea" parameterType="int">
 		select *, date_format(createdAt, '%Y - %m - %d') createdAt
 
@@ -25,6 +26,7 @@
 		  from interestarea
 		 where userNo = #{userNo}
 	</select> -->
+
 	
 	<select id="selectInterestArea" resultType="InterestArea" parameterType="map">
 		select dongCode, userNo, date_format(createdAt, '%Y-%m-%d') createdAt

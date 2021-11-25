@@ -18,8 +18,12 @@ public interface HouseDealMapper {
 	List<SidoGugunCode> selectGugunInSido(String sido);
 
 	List<DongCode> selectDongInGugun(String gugun);
+	
+	SidoGugunCode selectSidoGugunByDong(String dongCode);
 
 	List<HouseDeal> selectAllHouseDealsInDong(Map<String, Object> map);
 	
 	List<HouseInfo> selectAllHouseInfosInDong(Map<String, Object> map);
+	
+	HouseInfo selectHouseInfosInNo(int no);
 }

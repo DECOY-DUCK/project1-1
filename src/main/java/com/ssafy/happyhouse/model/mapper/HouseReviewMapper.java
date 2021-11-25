@@ -18,7 +18,7 @@ public interface HouseReviewMapper {
 
 	List<Integer> selectHouseReviewLikes(int no);
 
-	int selectAllHouseReviewsLikesCount(int no);
+	int selectAllHouseReviewLikesCount(int reviewNo);
 
 	int insertHouseReview(HouseReview houseReview);
 
