@@ -32,8 +32,8 @@ public class QnAServiceImpl implements QnAService {
 	}
 
 	@Override
-	public QnA getQnA(@RequestParam Map<String, Object> map) {
-		return qnaMapper.selectQnA(map);
+	public List<QnA> getQnA(int authorNo) {
+		return qnaMapper.selectQnA(authorNo);
 	}
 
 	@Override

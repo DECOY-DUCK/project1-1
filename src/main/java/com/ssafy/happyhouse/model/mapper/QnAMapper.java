@@ -15,7 +15,7 @@ public interface QnAMapper {
 
 	int selectAllQnAsCount();
 
-	QnA selectQnA(Map<String, Object> map);
+	List<QnA> selectQnA(int authorNo);
 
 	List<QnAReply> selectQnAReplies(int qnaNo);
 	

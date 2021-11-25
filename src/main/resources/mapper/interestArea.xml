@@ -17,6 +17,16 @@
 		where userNo = #{no};
 	</select>
 
+	<!-- <select id="selectAllInterestAreas" resultType="InterestArea" parameterType="int">
+		select *, date_format(createdAt, '%Y - %m - %d') createdAt
+
+	<select id="selectAllInterestAreas" resultType="InterestArea" parameterType="int">
+		select dongCode, userNo, date_format(createdAt, '%Y-%m-%d') createdAt
+ branch 'master' of https://lab.ssafy.com/cocov2222/happyhouse_final_daejeon_3_-_.git
+		  from interestarea
+		 where userNo = #{userNo}
+	</select> -->
+
 	
 	<select id="selectInterestArea" resultType="InterestArea" parameterType="map">
 		select dongCode, userNo, date_format(createdAt, '%Y-%m-%d') createdAt
